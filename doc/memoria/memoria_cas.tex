@@ -1,0 +1,46 @@
+\documentclass[12pt,a4paper,titlepage,twoside]{report}
+\usepackage[T1]{fontenc}
+\usepackage[english, spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{xcolor}
+% http://tug.ctan.org/tex-archive/macros/latex/contrib/fancyhdr/
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\nouppercase \rightmark}
+\fancyhead[LO,RE]{\nouppercase \leftmark}
+\fancyfoot[C]{\thepage}
+
+\newcommand{\Keywords}[1]{\vfill\noindent{\small{\em Palabras clave}: #1}}
+\definecolor{grisclar}{gray}{0.5}
+\definecolor{grisfosc}{gray}{0.25}
+
+% Editar con los datos correspondientes
+\newcommand{\titulo}{[Título del PFC]}
+\newcommand{\titulacion}{[Titulación]}
+\newcommand{\autor}{[Nombre del autor/es]}
+\newcommand{\director}{[Nombre del director/es]}
+
+\title{\titulo}
+\author{\autor}
+
+\begin{document}
+\input{portada_cas}
+
+\begin{abstract}
+In hac habitasse platea dictumst. Aliquam erat volutpat. Quisque quis nunc ut ipsum adipiscing imperdiet. Fusce ipsum sapien, ultricies sit amet luctus a, hendrerit et erat. Nullam consectetur luctus commodo. Praesent consequat nunc sed odio adipiscing feugiat. Nunc et tempor dolor. Donec tristique nibh eu libero tincidunt vitae rutrum elit condimentum.
+
+\Keywords{integer, blandit, pharetra, urna, id.}
+\end{abstract}
+
+\tableofcontents
+
+\chapter{Título del capítulo 1}
+
+\section{Título de la sección 1}
+
+\chapter{Título del capítulo 2}
+
+\end{document}

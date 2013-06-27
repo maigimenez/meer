@@ -1,0 +1,33 @@
+Meer: Generación automática de aplicaciones para terminales móviles inteligentes a partir de informes DICOM SR. 
+
+Alumna: Mayte Giménez Fayos
+Tutor: Damià Segrelles
+
+
+El objetivo del siguiente Proyecto Fin de Carrera consiste en el desarrollo de una aplicación que a partir de un esquema de un informe médico, codificado en el estándar DICOM-SR, genere de manera automática una aplicación para dispositivos móviles de tipo Android de modo que facilite la adquisición de datos de pacientes e informes válidos.
+
+
+El estándar Digital Imaging and Communication in Medicine (DICOM) define como tratar imágenes médicas desde su procesado hasta su comunicación. DICOM también especifica una extensión para soportar informes estructurados médicos (DICOM-SR), lo que ha permitido el desarrollo de distintas líneas de investigación basadas en este estándar. 
+
+En el ámbito médico, es fundamental que los datos adquiridos en los informes sean exhaustivos y fidedignos, sin embargo la gran versatilidad el estándar DICOM-SR hace que la propia adquisición de los datos sea un reto, en la que  la aparición y expansión de terminales móviles inteligentes pueden facilitar  la interacción entre el  usuario y la máquina. Estas tecnologías nos ofrecen la posibilidad de obtener datos de informes clínicos sin incrementar significativamente la carga de trabajo del personal médico. Por ello, son estas cualidades las que pretendemos explorar y explotar en este PFC, simplificando el proceso de adquisición de información para la obtención masiva de datos y de una mayor calidad. 
+
+Para ello se plantea como objetivo del PFC,  una aplicación para terminales Android, que permita al usuario introducir los datos de los informes estructurados basados en DICOMSR,  de un modo productivo, eficiente e intuitivo. La aplicación propuesta debe generar automáticamente a partir de un fichero plantilla donde se defina la estructura de informe DICOM-SR,  el código de la aplicación Android que proporcione la funcionalidad de inserción de informes.
+
+El primer paso por lo tanto será el de desarrollar la aplicación genérica Android y 
+verificar su usabilidad. Pondremos especial atención al soporte de terminales de grandes dimensiones, superiores a 12” pues son estos terminales los más empleados en el ámbito que nos incumbe. 
+Una vez tengamos esta aplicación probada y verificada su usabilidad, pasaremos al desarrollo de un analizador sintáctico de tipo SAX capaz de obtener toda la información contenida en el fichero DICOM-SR. A partir de esta información generaremos el modelo de clases, la interfaz y las interacciones de la aplicación Android para un informe concreto.
+La interfaz, por lo antes explicado es un punto importante, y se construirá a partir de un sistema de plantillas adecuado para cada elemento del informe. El sistema permitirá que el cambio entre una interfaz para un elemento y otro sea trivial, para de este modo adaptarse a las necesidades de los usuarios. 
+
+
+Metodología de desarrollo. 
+Objetivos:
+● Comprender la estructura de los informes médicos de tipo DICOM-SR. 
+● Desarrollar una aplicación que realice el análisis sintáctico de ficheros DICOM-SR.
+● Desarrollar una aplicación Android genérica para generar interfaces que permitan la 
+introducción de informes DICOM-SR en base a plantillas.
+● Comprender la generación de código haciendo uso de plantillas. 
+● Testear la aplicación para un informe concreto:
+○ Generar el código XML para soportar la internacionalización
+○ Generar el código XML que desarrolle la interfaz de usuario. 
+○ Generar el código java que codifique los modelos de clase del informe. 
+○ Generar el código java que codifique las interacciones entre actividades.
