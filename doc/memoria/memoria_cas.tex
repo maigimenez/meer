@@ -2,45 +2,178 @@
 \usepackage[T1]{fontenc}
 \usepackage[english, spanish]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage[style=spanish]{csquotes}
+
+%Latin modern font
 \usepackage{lmodern}
+
+%\usepackage[backend=bibtex]{biblatex}
+%\bibliography{bibliografia.bib} % or
+
+\usepackage{hyperref}
+\usepackage{bookmark}
+\usepackage[numbers]{natbib}
+
 \usepackage{graphicx}
-\usepackage{xcolor}
+% Con esta opción no cargo las imágenes sólo sus espacios
+%\usepackage[draft]{graphicx}
+\usepackage{wrapfig} %Las imágenes quedan rodeadas de texto
+
+%Interlineado
+\usepackage{setspace}
+
+% Parámetro para poder usar los colorines
+\usepackage[pdftex,usenames,dvipsnames]{xcolor}
+
+%Paquete para justificar el texto
+\usepackage{ragged2e} 
+\usepackage{notoccite}
+
+% Penalizo la finalización o el inicio de la página con 
+% lineas huerfanas
+%\clubpenalty=10000
+%\widowpenalty=10000
+
+\usepackage[nottoc,numbib]{tocbibind}
+\usepackage[toc,page]{appendix}
+
+%Fancy chapter
+\usepackage{titlesec, blindtext, color}
+\definecolor{gray75}{gray}{0.75}
+\newcommand{\hsp}{\hspace{20pt}}
+\newcommand{\hsc}{\hspace{10pt}}
+\titleformat{\chapter}[hang]{\LARGE\bfseries}{\thechapter\hsp\textcolor{RubineRed}{|}\hsp}{0pt}{\LARGE\bfseries}
+\titleformat{\section}{\large\bfseries}{\thesection.\hsc{|}}{10pt}{\large\bfseries}
+
+
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{caption}
+
+\lstdefinestyle{dicom}{
+    basicstyle=\footnotesize\ttfamily, 
+    numbers=left,              
+    extendedchars=true,
+    stepnumber=1,               
+    captionpos=b,
+    numberstyle=\tiny\color{RubineRed},
+    language=XML,
+    numbersep=5pt,  
+    tabsize=2,                  
+    extendedchars=true,         
+    breaklines=true,            
+    stringstyle=\color{white}\ttfamily,
+    showspaces=false,           
+    showtabs=false,             
+    xleftmargin=5pt,
+    framexleftmargin=5pt,
+    framexrightmargin=5pt,
+    framexbottommargin=4pt,
+    %frame=single,
+    backgroundcolor=\color{lightgray},
+    showstringspaces=false    
+}
+
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}{\colorbox{RubineRed}{\parbox{\textwidth}{\hspace{15pt}#1#2#3}}}
+\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize}}
+
+
+% Table of contents on the begining of a line. 
+\usepackage{titletoc}
+% Referencias
+\usepackage{hyperref}
+
+\usepackage[includefoot]{geometry}
+\geometry{
+  top=2cm,
+  inner=2.7cm,
+  outer=2.7cm,
+  bottom=4cm,
+  headheight=5ex,       % <-- and this
+  headsep=5ex,
+  footskip = 1.5cm          % <-- and this
+}
+
+% Cabecera
 % http://tug.ctan.org/tex-archive/macros/latex/contrib/fancyhdr/
 \usepackage{fancyhdr}
+\setlength{\headheight}{3cm}
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[LE,RO]{\nouppercase \rightmark}
 \fancyhead[LO,RE]{\nouppercase \leftmark}
 \fancyfoot[C]{\thepage}
 
+
 \newcommand{\Keywords}[1]{\vfill\noindent{\small{\em Palabras clave}: #1}}
 \definecolor{grisclar}{gray}{0.5}
 \definecolor{grisfosc}{gray}{0.25}
 
 % Editar con los datos correspondientes
-\newcommand{\titulo}{[Título del PFC]}
-\newcommand{\titulacion}{[Titulación]}
-\newcommand{\autor}{[Nombre del autor/es]}
-\newcommand{\director}{[Nombre del director/es]}
+\newcommand{\titulo}{Meer: Generación automática de aplicaciones para terminales móviles inteligentes a partir de informes DICOM SR. }
+\newcommand{\titulacion}{Ingeniería Informática}
+\newcommand{\autor}{Mayte Giménez Fayos}
+\newcommand{\director}{Ignacio Blanquer}
+\newcommand{\codirector}{Damià Segrelles}
+
+% Allows to display directory tree, like in the windows explorator
+\usepackage{dirtree}
+\usepackage{pdfpages}
+
 
 \title{\titulo}
 \author{\autor}
 
 \begin{document}
-\input{portada_cas}
+
+%\input{portada_cas}
+\includepdf[pages={1}]{./imgs/portada.pdf}
 
 \begin{abstract}
-In hac habitasse platea dictumst. Aliquam erat volutpat. Quisque quis nunc ut ipsum adipiscing imperdiet. Fusce ipsum sapien, ultricies sit amet luctus a, hendrerit et erat. Nullam consectetur luctus commodo. Praesent consequat nunc sed odio adipiscing feugiat. Nunc et tempor dolor. Donec tristique nibh eu libero tincidunt vitae rutrum elit condimentum.
+El objetivo del siguiente Proyecto Fin de Carrera consiste en el desarrollo de una aplicación que a partir de un esquema de un informe médico, codificado en el estándar DICOM-SR, genere de manera automática una aplicación para dispositivos móviles de tipo Android de modo que facilite la adquisición de datos de pacientes e informes válidos.
+\medskip  \par
+El estándar Digital Imaging and Communication in Medicine (DICOM) define como tratar imágenes médicas desde su procesado hasta su comunicación. DICOM también especifica una extensión para soportar informes estructurados médicos (DICOM-SR), lo que ha permitido el desarrollo de distintas líneas de investigación basadas en este estándar. \medskip \par
 
-\Keywords{integer, blandit, pharetra, urna, id.}
+En el ámbito médico, es fundamental que los datos adquiridos en los informes sean exhaustivos y fidedignos, sin embargo la gran versatilidad el estándar DICOM-SR hace que la propia adquisición de los datos sea un reto, en la que  la aparición y expansión de terminales móviles inteligentes pueden facilitar  la interacción entre el  usuario y la máquina. Estas tecnologías nos ofrecen la posibilidad de obtener datos de informes clínicos sin incrementar significativamente la carga de trabajo del personal médico. Por ello, son estas cualidades las que pretendemos explorar y explotar en este PFC, simplificando el proceso de adquisición de información para la obtención masiva de datos y de una mayor calidad.\par
+Para ello se plantea como objetivo del PFC,  una aplicación para terminales Android, que permita al usuario introducir los datos de los informes estructurados basados en DICOMSR,  de un modo productivo, eficiente e intuitivo. La aplicación propuesta debe generar automáticamente a partir de un fichero plantilla donde se defina la estructura de informe DICOM-SR,  el código de la aplicación Android que proporcione la funcionalidad de inserción de informes.\par
+
+\Keywords{DicomSR, Android, Python, Generación automática de código, imagen médica.}
 \end{abstract}
 
 \tableofcontents
+\newpage
 
-\chapter{Título del capítulo 1}
+\listoffigures
 
-\section{Título de la sección 1}
+\chapter{Introducción}
+\input{intro}
 
-\chapter{Título del capítulo 2}
+\chapter{Objetivos}
+\input{objetivos}
+
+\chapter{Estado del arte }\label{arte}
+\chaptermark{Estado del arte}
+\input{estadoArte}
+
+\chapter{Tecnologías empleadas en el proyecto}
+\input{tecnologias}
+
+\chapter{Desarrollo}
+\input{desarrollo}
+
+\chapter{Conclusiones}
+
+\chapter{Futuras mejoras}
+
+%\printbibliography
+\bibliographystyle{unsrtnat}
+\bibliography{bibliografia}
+
+\appendix
+\chapter{Informe DICOM-SR}\label{dicom-sr}
+\input{ap_dicomSR.tex}
+\chapter{Plantilla de un informe DICOM-SR}\label{dicom-sr-template}
+
 
 \end{document}

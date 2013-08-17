@@ -1,0 +1,52 @@
+En el capítulo \ref{intro} hemos planteado el problema y una posible solución al mismo. El objetivo tanto del capítulo anterior como este es el de explicar los detalles de implementación de la solución que hemos propuesto.\par 
+Si en el capítulo  \ref{arte} repasábamos el estado del arte y sentábamos las bases teóricas del proyecto, en este capítulo describiremos la tecnología de la que hacemos uso para ejecutar de solución que proponemos. Además justificaremos los motivos que nos han llevado a seleccionar esta tecnología y no otra.\par
+
+\section{Dicom SR}\label{dicomSR}
+En primer lugar hablaremos de la tecnología que nos impone el proyecto. Los PACs utilizan el estándar DICOM-SR y como nuestro objetivo es que la solución se integre en el ecosistema existente en los centros médicos deberemos emplear este estándar.\medskip\par
+
+\subsection{Definición}
+El estándar DICOM-SR se incluye dentro del suplemento 23 del estándar de imagen médica DICOM. Describe una arquitectura de documento que permite compartir, almacenar y transmitir información de informes médicos estructurados \cite{hussein2004dicom}.\par
+Se diseñó con la intención de suplir la brecha entre la información contenida en las imágenes y la información que los profesionales médicos introducen en sus informes. Los ficheros DICOM-SR almacenan de forma no ambigua y jerárquica todos los conceptos que podemos encontrar en un informe médico tradicional y además pueden incluir referencias a:
+\begin{itemize}
+	\item Imágenes en formato DICOM. 
+	\item Informes de estudios previos.
+	\item Detalles de las imágenes.
+\end{itemize}\par\medskip\par
+El estándar define el modelo de la información y cómo debe gestionarse el documento, lo que permite personalizar muchos aspectos de la implementación final\cite{hussein2004dicom2}.\par
+Sin embargo al tratarse de un estándar bastante complejo, han surgido soluciones bastante dispares, entre las que podemos encontrar:
+\begin{itemize}
+	\item Una implementación basada en la orientación objetos integrando el estándar DICOM-SR en la estructura de XML.\cite{tirado2002information}
+	\item Una implementación extendiendo el modelo de objetos de documento XML (DOM).\cite{doi:10.1117}
+	\item Una implementación en C y C++ del estándar. \cite{Riesmeier2001795}
+\end{itemize}
+\par
+Desde la Asociación Nacional de Fabricantes eléctricos (NEMA), se están haciendo esfuerzos por unificar los criterios y seguir avanzando en la definición del estándar.\par
+Para este proyecto se emplea una implementación en la que el informe se estructura en un XML. Expondremos los detalles de los ficheros DICOM-SR con los que trabajaremos en los apartados \ref{dicomsr:ficheros},\ref{dicomsr:plantillas}, \ref{dicomsr:vocabulario} y \ref{dicomsr:internacionalizacion}.\par
+
+\subsection{Beneficios del estándar DICOM-SR}
+A pesar de los problemas que surgen en la definición y en la implementación del estándar, los beneficios que aporta su desarrollo merecen el esfuerzo. Podemos encontrar un resumen exhaustivo de las ventajas de DICOM-SR en el siguiente artículo \cite{noumeir2006benefits}. Entre las mejoras que aporta a la práctica clínica más relevantes encontramos: 
+\begin{itemize}
+	\item Mejora la comunicación entre los profesionales, al utilizar un léxico estándar no hay lugar a traducciones o 	interpretaciones erróneas. 
+	\item Los informes son más precisos y concisos. Los profesionales rellenan el informe utilizando los códigos adecuados sin 	las estructuras gramaticales que serían necesarias al redactar los informes de modo tradicional. 
+	\item Se evitan los errores gramaticales y de transcripción.
+	\item La interpretación de los informes es más sencilla y permite una interpretación asistida por ordenador. 
+	\item Las imágenes DICOM y los informes DICOM-SR comparten la misma cabecera que contiene información acerca del paciente, 	lo que mejora el registro de información médica.
+	\item El informe incluye medidas numéricas de las evidencias encontradas, que redundará en la precisión del informe.
+	\item Permite ejecutar acciones automáticas sobre los informes permitiendo la minería de datos.
+	\item Se enfatizan los contenidos. El informe en DICOM-SR no guarda información de cómo debe mostrarse al usuario.
+	\item Permite la transformación a otros formatos. 
+	\item Permite la integración con sistemas que reconozcan el habla. 
+\end{itemize} 
+Como podemos comprobar el desarrollo del estándar tiene un impacto beneficioso directamente sobre la práctica clínica, es por esto que en los últimos 5 años ha crecido el interés de la comunidad científica por explotar el estándar DICOM-SR.\par
+
+\subsection{Estructura de un informe médico estructurado} \label{dicomsr:ficheros}
+A continuación describiremos las características de un informe médico siguiendo el estándar DICOM-SR.\par
+Un fichero DICOM-SR almacena los datos del informe estructurado en \textit{contenedores}, cada contenedor está formado por un par de elementos clave-valor. La clave que se denomina \textit{CONCEPT\_NAME}, los nombres de los conceptos vienen definidos por el vocabulario dónde podemos encontrar este concepto \textit{CODE\_SCHEMA} y por el código que identifica este concepto \textit{CODE\_VALUE}
+
+\subsection{Estructura de una plantilla para un informe médico estructurado}\label{dicomsr:plantillas}
+\subsection{Vocabulario}\label{dicomsr:vocabulario}
+\subsection{Internacionalización}\label{dicomsr:internacionalizacion}
+
+\section{Android}
+\subsection{Tabletas e interfaces táctiles de grandes dimensiones}
+\section{Python}
