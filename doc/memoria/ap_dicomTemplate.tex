@@ -1,0 +1,685 @@
+\lstset{escapechar=@,style=dicom}
+\renewcommand*\lstlistingname{Fichero}
+
+\begin{lstlisting}[label=dicom-template,caption=Plantilla de un informe estructurado de una exploración de mama]
+
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- DICOM HEADER -->
+
+<DICOM_SR Description="Exploration of breast" IDOntology="4">
+  <CONTAINER>
+    <CONCEPT_NAME>
+      <CODE_VALUE>172117008</CODE_VALUE>
+      <CODE_SCHEMA>SNOMED-CT</CODE_SCHEMA>
+      <CODE_MEANING>Exploration of Breast</CODE_MEANING>
+    </CONCEPT_NAME>
+    <PROPERTIES>
+      <CARDINALITY max="1" min="1"/>
+      <CONDITION_TYPE type="M"/>
+      <EXPRESION_CONDITION xquery=""/>
+    </PROPERTIES>
+    <CHILDS>
+      <DATE>
+        <CONCEPT_NAME>
+          <CODE_VALUE>399651003</CODE_VALUE>
+          <CODE_SCHEMA>SNOMED-CT</CODE_SCHEMA>
+          <CODE_MEANING>Date of Report</CODE_MEANING>
+        </CONCEPT_NAME>
+        <PROPERTIES>
+          <CARDINALITY max="1" min="1"/>
+          <CONDITION_TYPE type="M"/>
+          <EXPRESION_CONDITION xquery=""/>
+          <DEFAULT_VALUE value=""/>
+        </PROPERTIES>
+      </DATE>
+      <NUM>
+        <CONCEPT_NAME>
+          <CODE_VALUE>118522005</CODE_VALUE>
+          <CODE_SCHEMA>SNOMED-CT</CODE_SCHEMA>
+          <CODE_MEANING>Identifier</CODE_MEANING>
+        </CONCEPT_NAME>
+        <PROPERTIES>
+          <CARDINALITY max="1" min="1"/>
+          <CONDITION_TYPE type="M"/>
+          <EXPRESION_CONDITION xquery=""/>
+          <DEFAULT_VALUE value=""/>
+        </PROPERTIES>
+      </NUM>
+      <NUM>
+        <CONCEPT_NAME>
+          <CODE_VALUE>RID13159</CODE_VALUE>
+          <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+          <CODE_MEANING>Patient Identifier</CODE_MEANING>
+        </CONCEPT_NAME>
+        <PROPERTIES>
+          <CARDINALITY max="1" min="1"/>
+          <CONDITION_TYPE type="M"/>
+          <EXPRESION_CONDITION xquery=""/>
+          <DEFAULT_VALUE value=""/>
+        </PROPERTIES>
+      </NUM>
+
+      <!-- RIGHT FEMALE BREAST -->
+      <CONTAINER>
+        <CONCEPT_NAME>
+         <CODE_VALUE>RID29896</CODE_VALUE>
+         <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+         <CODE_MEANING>Right Female Breast</CODE_MEANING>
+        </CONCEPT_NAME>
+        <PROPERTIES>
+          <CARDINALITY max="1" min="1"/>
+          <CONDITION_TYPE type="M"/>
+          <EXPRESION_CONDITION xquery=""/>
+          <DEFAULT_VALUE value=""/>
+        </PROPERTIES>
+
+        <!-- RIGHT FEMALE BREAST INJURIES -->
+        <CHILDS>
+          <CONTAINER>
+            <CONCEPT_NAME>
+              <CODE_VALUE>RID3874</CODE_VALUE>
+              <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+              <CODE_MEANING>Mass</CODE_MEANING>
+            </CONCEPT_NAME>
+            <PROPERTIES>
+              <CARDINALITY max="-1" min="0"/>
+              <CONDITION_TYPE type="U"/>
+              <EXPRESION_CONDITION xquery=""/>
+            </PROPERTIES>
+            <CHILDS>
+              <TEXT>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>118522005</CODE_VALUE>
+                  <CODE_SCHEMA>SNOMED-CT</CODE_SCHEMA>
+                  <CODE_MEANING>Identifier</CODE_MEANING>
+                </CONCEPT_NAME>
+                <PROPERTIES>
+                  <CARDINALITY max="1" min="1"/>
+                  <CONDITION_TYPE type="M"/>
+                  <EXPRESION_CONDITION xquery=""/>
+                  <DEFAULT_VALUE value=""/>
+                </PROPERTIES>
+              </TEXT>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>RID29929</CODE_VALUE>
+                  <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+                  <CODE_MEANING>Upper Outer Quadrant of Right Female Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <PROPERTIES>
+                  <CARDINALITY max="1" min="1"/>
+                  <CONDITION_TYPE type="M"/>
+                  <EXPRESION_CONDITION xquery=""/>
+                  <DEFAULT_VALUE value="0"/>
+                  <UNIT_MEASUREMENT>
+                    <CONCEPT_NAME>
+                      <CODE_VALUE>000000001</CODE_VALUE>
+                      <CODE_SCHEMA>UNIT_MEASUREMENT</CODE_SCHEMA>
+                      <CODE_MEANING>Boolean Units</CODE_MEANING>
+                    </CONCEPT_NAME>
+                  </UNIT_MEASUREMENT>
+                </PROPERTIES>
+              </NUM>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>RID29935</CODE_VALUE>
+                  <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+                  <CODE_MEANING>Lower Outer Quadrant of Right Female Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <VALUE> TRUE </VALUE>
+              </NUM>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>RID29934</CODE_VALUE>
+                  <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+                  <CODE_MEANING>Lower Outer Quadrant of Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <PROPERTIES>
+                  <CARDINALITY max="1" min="1"/>
+                  <CONDITION_TYPE type="M"/>
+                  <EXPRESION_CONDITION xquery=""/>
+                  <DEFAULT_VALUE value="0"/>
+                  <UNIT_MEASUREMENT>
+                    <CONCEPT_NAME>
+                      <CODE_VALUE>000000001</CODE_VALUE>
+                      <CODE_SCHEMA>UNIT_MEASUREMENT</CODE_SCHEMA>
+                      <CODE_MEANING>Boolean Units</CODE_MEANING>
+                    </CONCEPT_NAME>
+                  </UNIT_MEASUREMENT>
+                </PROPERTIES>
+              </NUM>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>RID29932</CODE_VALUE>
+                  <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+                  <CODE_MEANING>Upper Inner Quadrant of Right Female Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <PROPERTIES>
+                  <CARDINALITY max="1" min="1"/>
+                  <CONDITION_TYPE type="M"/>
+                  <EXPRESION_CONDITION xquery=""/>
+                  <DEFAULT_VALUE value="0"/>
+                  <UNIT_MEASUREMENT>
+                    <CONCEPT_NAME>
+                      <CODE_VALUE>000000001</CODE_VALUE>
+                      <CODE_SCHEMA>UNIT_MEASUREMENT</CODE_SCHEMA>
+                      <CODE_MEANING>Boolean Units</CODE_MEANING>
+                    </CONCEPT_NAME>
+                  </UNIT_MEASUREMENT>
+                </PROPERTIES>
+              </NUM>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>RID29938</CODE_VALUE>
+                  <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+                  <CODE_MEANING>Lower Inner Quadrant of Right Female Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <PROPERTIES>
+                  <CARDINALITY max="1" min="1"/>
+                  <CONDITION_TYPE type="M"/>
+                  <EXPRESION_CONDITION xquery=""/>
+                  <DEFAULT_VALUE value="0"/>
+                  <UNIT_MEASUREMENT>
+                    <CONCEPT_NAME>
+                      <CODE_VALUE>000000001</CODE_VALUE>
+                      <CODE_SCHEMA>UNIT_MEASUREMENT</CODE_SCHEMA>
+                      <CODE_MEANING>Boolean Units</CODE_MEANING>
+                    </CONCEPT_NAME>
+                  </UNIT_MEASUREMENT>
+                </PROPERTIES>
+              </NUM>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>RID29947</CODE_VALUE>
+                  <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+                  <CODE_MEANING>Lateral Region of Right Female Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <PROPERTIES>
+                  <CARDINALITY max="1" min="1"/>
+                  <CONDITION_TYPE type="M"/>
+                  <EXPRESION_CONDITION xquery=""/>
+                  <DEFAULT_VALUE value="0"/>
+                  <UNIT_MEASUREMENT>
+                    <CONCEPT_NAME>
+                      <CODE_VALUE>000000001</CODE_VALUE>
+                      <CODE_SCHEMA>UNIT_MEASUREMENT</CODE_SCHEMA>
+                      <CODE_MEANING>Boolean Units</CODE_MEANING>
+                    </CONCEPT_NAME>
+                  </UNIT_MEASUREMENT>
+                </PROPERTIES>
+              </NUM>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>RID29941</CODE_VALUE>
+                  <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+                  <CODE_MEANING>Superior Region of Right Female Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <VALUE> TRUE </VALUE>
+              </NUM>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>RID29953</CODE_VALUE>
+                  <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+                  <CODE_MEANING>Subareolar Region of  Right Female Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <PROPERTIES>
+                  <CARDINALITY max="1" min="1"/>
+                  <CONDITION_TYPE type="M"/>
+                  <EXPRESION_CONDITION xquery=""/>
+                  <DEFAULT_VALUE value="0"/>
+                  <UNIT_MEASUREMENT>
+                    <CONCEPT_NAME>
+                      <CODE_VALUE>000000001</CODE_VALUE>
+                      <CODE_SCHEMA>UNIT_MEASUREMENT</CODE_SCHEMA>
+                      <CODE_MEANING>Boolean Units</CODE_MEANING>
+                    </CONCEPT_NAME>
+                  </UNIT_MEASUREMENT>
+                </PROPERTIES>
+              </NUM>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>RID29944</CODE_VALUE>
+                  <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+                  <CODE_MEANING>Medial Region of Right Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <PROPERTIES>
+                  <CARDINALITY max="1" min="1"/>
+                  <CONDITION_TYPE type="M"/>
+                  <EXPRESION_CONDITION xquery=""/>
+                  <DEFAULT_VALUE value="0"/>
+                  <UNIT_MEASUREMENT>
+                    <CONCEPT_NAME>
+                      <CODE_VALUE>000000001</CODE_VALUE>
+                      <CODE_SCHEMA>UNIT_MEASUREMENT</CODE_SCHEMA>
+                      <CODE_MEANING>Boolean Units</CODE_MEANING>
+                    </CONCEPT_NAME>
+                  </UNIT_MEASUREMENT>
+                </PROPERTIES>
+              </NUM>
+              <NUM>	
+                <CONCEPT_NAME>
+                  <CODE_VALUE>RID29950</CODE_VALUE>
+                  <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+                  <CODE_MEANING>Central Region of Right Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <PROPERTIES>
+                  <CARDINALITY max="1" min="1"/>
+                  <CONDITION_TYPE type="M"/>
+                  <EXPRESION_CONDITION xquery=""/>
+                  <DEFAULT_VALUE value="0"/>
+                  <UNIT_MEASUREMENT>
+                    <CONCEPT_NAME>
+                      <CODE_VALUE>000000001</CODE_VALUE>
+                      <CODE_SCHEMA>UNIT_MEASUREMENT</CODE_SCHEMA>
+                      <CODE_MEANING>Boolean Units</CODE_MEANING>
+                    </CONCEPT_NAME>
+                  </UNIT_MEASUREMENT>
+                </PROPERTIES>
+              </NUM>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>RID29907</CODE_VALUE>
+                  <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+                  <CODE_MEANING>Nipple of Right Female Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <PROPERTIES>
+                  <CARDINALITY max="1" min="1"/>
+                  <CONDITION_TYPE type="M"/>
+                  <EXPRESION_CONDITION xquery=""/>
+                  <DEFAULT_VALUE value="0"/>
+                  <UNIT_MEASUREMENT>
+                    <CONCEPT_NAME>
+                      <CODE_VALUE>000000001</CODE_VALUE>
+                      <CODE_SCHEMA>UNIT_MEASUREMENT</CODE_SCHEMA>
+                      <CODE_MEANING>Boolean Units</CODE_MEANING>
+                    </CONCEPT_NAME>
+                  </UNIT_MEASUREMENT>
+                </PROPERTIES>
+              </NUM>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>RID29918</CODE_VALUE>
+                  <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+                  <CODE_MEANING>Areola of Right Female Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <PROPERTIES>
+                  <CARDINALITY max="1" min="1"/>
+                  <CONDITION_TYPE type="M"/>
+                  <EXPRESION_CONDITION xquery=""/>
+                  <DEFAULT_VALUE value="0"/>
+                  <UNIT_MEASUREMENT>
+                    <CONCEPT_NAME>
+                      <CODE_VALUE>000000001</CODE_VALUE>
+                      <CODE_SCHEMA>UNIT_MEASUREMENT</CODE_SCHEMA>
+                      <CODE_MEANING>Boolean Units</CODE_MEANING>
+                    </CONCEPT_NAME>
+                  </UNIT_MEASUREMENT>
+                </PROPERTIES>
+              </NUM>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>TRMM0001</CODE_VALUE>
+                  <CODE_SCHEMA>TRENCADIS_MAMO</CODE_SCHEMA>
+                  <CODE_MEANING>Axillary Tail of Right Female Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <PROPERTIES>
+                  <CARDINALITY max="1" min="1"/>
+                  <CONDITION_TYPE type="M"/>
+                  <EXPRESION_CONDITION xquery=""/>
+                  <DEFAULT_VALUE value="0"/>
+                  <UNIT_MEASUREMENT>
+                    <CONCEPT_NAME>
+                      <CODE_VALUE>000000001</CODE_VALUE>
+                      <CODE_SCHEMA>UNIT_MEASUREMENT</CODE_SCHEMA>
+                      <CODE_MEANING>Boolean Units</CODE_MEANING>
+                    </CONCEPT_NAME>
+                  </UNIT_MEASUREMENT>
+                </PROPERTIES>
+              </NUM>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>TRMM0003</CODE_VALUE>
+                  <CODE_SCHEMA>TRENCADIS_MAMO</CODE_SCHEMA>
+                  <CODE_MEANING>Axillary Region of Right Female Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <PROPERTIES>
+                  <CARDINALITY max="1" min="1"/>
+                  <CONDITION_TYPE type="M"/>
+                  <EXPRESION_CONDITION xquery=""/>
+                  <DEFAULT_VALUE value="0"/>
+                  <UNIT_MEASUREMENT>
+                    <CONCEPT_NAME>
+                      <CODE_VALUE>000000001</CODE_VALUE>
+                      <CODE_SCHEMA>UNIT_MEASUREMENT</CODE_SCHEMA>
+                      <CODE_MEANING>Boolean Units</CODE_MEANING>
+                    </CONCEPT_NAME>
+                  </UNIT_MEASUREMENT>
+                </PROPERTIES>
+              </NUM>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>TRMM0005</CODE_VALUE>
+                  <CODE_SCHEMA>TRENCADIS_MAMO</CODE_SCHEMA>
+                  <CODE_MEANING>Inframammary Sulcus of Right Female Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+              </NUM>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>TRMM0007</CODE_VALUE>
+                  <CODE_SCHEMA>TRENCADIS_MAMO</CODE_SCHEMA>
+                  <CODE_MEANING>Intermammary Sulcus of Right Female Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+              </NUM>
+            </CHILDS>
+      </CONTAINER>
+
+      <!-- LEFT FEMALE BREAST -->
+      <CONTAINER>
+        <CONCEPT_NAME>
+         <CODE_VALUE>RID29897</CODE_VALUE>
+         <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+         <CODE_MEANING>Left Female Breast</CODE_MEANING>
+        </CONCEPT_NAME>
+
+        <!-- LEFT FEMALE BREAST INJURIES -->
+        <CHILDS>
+          <CONTAINER>
+            <CONCEPT_NAME>
+              <CODE_VALUE>RID34265</CODE_VALUE>
+              <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+              <CODE_MEANING>Asymmetry</CODE_MEANING>
+            </CONCEPT_NAME>
+            <CHILDS>
+              <TEXT>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>118522005</CODE_VALUE>
+                  <CODE_SCHEMA>SNOMED-CT</CODE_SCHEMA>
+                  <CODE_MEANING>Identifier</CODE_MEANING>
+                </CONCEPT_NAME>
+                <VALUE> A001 </VALUE>
+              </TEXT>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>RID29930</CODE_VALUE>
+                  <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+                  <CODE_MEANING>Upper Outer Quadrant of Left Female Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <PROPERTIES>
+                  <CARDINALITY max="1" min="1"/>
+                  <CONDITION_TYPE type="M"/>
+                  <EXPRESION_CONDITION xquery=""/>
+                  <DEFAULT_VALUE value="0"/>
+                  <UNIT_MEASUREMENT>
+                    <CONCEPT_NAME>
+                      <CODE_VALUE>000000001</CODE_VALUE>
+                      <CODE_SCHEMA>UNIT_MEASUREMENT</CODE_SCHEMA>
+                      <CODE_MEANING>Boolean Units</CODE_MEANING>
+                    </CONCEPT_NAME>
+                  </UNIT_MEASUREMENT>
+                </PROPERTIES>
+              </NUM>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>RID29936</CODE_VALUE>
+                  <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+                  <CODE_MEANING>Lower Outer Quadrant of Left Female Breast</CODE_MEANING>
+                <PROPERTIES>
+                  <CARDINALITY max="1" min="1"/>
+                  <CONDITION_TYPE type="M"/>
+                  <EXPRESION_CONDITION xquery=""/>
+                  <DEFAULT_VALUE value="0"/>
+                  <UNIT_MEASUREMENT>
+                    <CONCEPT_NAME>
+                      <CODE_VALUE>000000001</CODE_VALUE>
+                      <CODE_SCHEMA>UNIT_MEASUREMENT</CODE_SCHEMA>
+                      <CODE_MEANING>Boolean Units</CODE_MEANING>
+                    </CONCEPT_NAME>
+                  </UNIT_MEASUREMENT>
+                </PROPERTIES>
+              </NUM>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>RID29933</CODE_VALUE>
+                  <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+                  <CODE_MEANING>Upper Inner Quadrant of Left Female Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <PROPERTIES>
+                  <CARDINALITY max="1" min="1"/>
+                  <CONDITION_TYPE type="M"/>
+                  <EXPRESION_CONDITION xquery=""/>
+                  <DEFAULT_VALUE value="0"/>
+                  <UNIT_MEASUREMENT>
+                    <CONCEPT_NAME>
+                      <CODE_VALUE>000000001</CODE_VALUE>
+                      <CODE_SCHEMA>UNIT_MEASUREMENT</CODE_SCHEMA>
+                      <CODE_MEANING>Boolean Units</CODE_MEANING>
+                    </CONCEPT_NAME>
+                  </UNIT_MEASUREMENT>
+                </PROPERTIES>
+              </NUM>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>RID29939</CODE_VALUE>
+                  <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+                  <CODE_MEANING>Lower Inner Quadrant of Left Female Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <PROPERTIES>
+                  <CARDINALITY max="1" min="1"/>
+                  <CONDITION_TYPE type="M"/>
+                  <EXPRESION_CONDITION xquery=""/>
+                  <DEFAULT_VALUE value="0"/>
+                  <UNIT_MEASUREMENT>
+                    <CONCEPT_NAME>
+                      <CODE_VALUE>000000001</CODE_VALUE>
+                      <CODE_SCHEMA>UNIT_MEASUREMENT</CODE_SCHEMA>
+                      <CODE_MEANING>Boolean Units</CODE_MEANING>
+                    </CONCEPT_NAME>
+                  </UNIT_MEASUREMENT>
+                </PROPERTIES>
+              </NUM>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>RID29948</CODE_VALUE>
+                  <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+                  <CODE_MEANING>Lateral Region of Left Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <VALUE> TRUE </VALUE>
+              </NUM>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>RID29942</CODE_VALUE>
+                  <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+                  <CODE_MEANING>Superior Region of Left Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <VALUE> TRUE </VALUE>
+              </NUM>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>RID29954</CODE_VALUE>
+                  <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+                  <CODE_MEANING>Subareolar Region of Left Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <PROPERTIES>
+                  <CARDINALITY max="1" min="1"/>
+                  <CONDITION_TYPE type="M"/>
+                  <EXPRESION_CONDITION xquery=""/>
+                  <DEFAULT_VALUE value="0"/>
+                  <UNIT_MEASUREMENT>
+                    <CONCEPT_NAME>
+                      <CODE_VALUE>000000001</CODE_VALUE>
+                      <CODE_SCHEMA>UNIT_MEASUREMENT</CODE_SCHEMA>
+                      <CODE_MEANING>Boolean Units</CODE_MEANING>
+                    </CONCEPT_NAME>
+                  </UNIT_MEASUREMENT>
+                </PROPERTIES>
+              </NUM>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>RID29945</CODE_VALUE>
+                  <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+                  <CODE_MEANING>Medial Region of Left Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <PROPERTIES>
+                  <CARDINALITY max="1" min="1"/>
+                  <CONDITION_TYPE type="M"/>
+                  <EXPRESION_CONDITION xquery=""/>
+                  <DEFAULT_VALUE value="0"/>
+                  <UNIT_MEASUREMENT>
+                    <CONCEPT_NAME>
+                      <CODE_VALUE>000000001</CODE_VALUE>
+                      <CODE_SCHEMA>UNIT_MEASUREMENT</CODE_SCHEMA>
+                      <CODE_MEANING>Boolean Units</CODE_MEANING>
+                    </CONCEPT_NAME>
+                  </UNIT_MEASUREMENT>
+                </PROPERTIES>
+              </NUM>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>RID29951</CODE_VALUE>
+                  <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+                  <CODE_MEANING>Central Region of Left Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <PROPERTIES>
+                  <CARDINALITY max="1" min="1"/>
+                  <CONDITION_TYPE type="M"/>
+                  <EXPRESION_CONDITION xquery=""/>
+                  <DEFAULT_VALUE value="0"/>
+                  <UNIT_MEASUREMENT>
+                    <CONCEPT_NAME>
+                      <CODE_VALUE>000000001</CODE_VALUE>
+                      <CODE_SCHEMA>UNIT_MEASUREMENT</CODE_SCHEMA>
+                      <CODE_MEANING>Boolean Units</CODE_MEANING>
+                    </CONCEPT_NAME>
+                  </UNIT_MEASUREMENT>
+                </PROPERTIES>
+              </NUM>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>RID29908</CODE_VALUE>
+                  <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+                  <CODE_MEANING>Nipple of Left Female Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <PROPERTIES>
+                  <CARDINALITY max="1" min="1"/>
+                  <CONDITION_TYPE type="M"/>
+                  <EXPRESION_CONDITION xquery=""/>
+                  <DEFAULT_VALUE value="0"/>
+                  <UNIT_MEASUREMENT>
+                    <CONCEPT_NAME>
+                      <CODE_VALUE>000000001</CODE_VALUE>
+                      <CODE_SCHEMA>UNIT_MEASUREMENT</CODE_SCHEMA>
+                      <CODE_MEANING>Boolean Units</CODE_MEANING>
+                    </CONCEPT_NAME>
+                  </UNIT_MEASUREMENT>
+                </PROPERTIES>
+              </NUM>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>RID29919</CODE_VALUE>
+                  <CODE_SCHEMA>RADLEX</CODE_SCHEMA>
+                  <CODE_MEANING>Areola of Left Female Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <PROPERTIES>
+                  <CARDINALITY max="1" min="1"/>
+                  <CONDITION_TYPE type="M"/>
+                  <EXPRESION_CONDITION xquery=""/>
+                  <DEFAULT_VALUE value="0"/>
+                  <UNIT_MEASUREMENT>
+                    <CONCEPT_NAME>
+                      <CODE_VALUE>000000001</CODE_VALUE>
+                      <CODE_SCHEMA>UNIT_MEASUREMENT</CODE_SCHEMA>
+                      <CODE_MEANING>Boolean Units</CODE_MEANING>
+                    </CONCEPT_NAME>
+                  </UNIT_MEASUREMENT>
+                </PROPERTIES>
+              </NUM>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>TRMM0002</CODE_VALUE>
+                  <CODE_SCHEMA>TRENCADIS_MAMO</CODE_SCHEMA>
+                  <CODE_MEANING>Axillary Tail of Left Female Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <PROPERTIES>
+                  <CARDINALITY max="1" min="1"/>
+                  <CONDITION_TYPE type="M"/>
+                  <EXPRESION_CONDITION xquery=""/>
+                  <DEFAULT_VALUE value="0"/>
+                  <UNIT_MEASUREMENT>
+                    <CONCEPT_NAME>
+                      <CODE_VALUE>000000001</CODE_VALUE>
+                      <CODE_SCHEMA>UNIT_MEASUREMENT</CODE_SCHEMA>
+                      <CODE_MEANING>Boolean Units</CODE_MEANING>
+                    </CONCEPT_NAME>
+                  </UNIT_MEASUREMENT>
+                </PROPERTIES>
+              </NUM>
+              <NUM>
+              <CONCEPT_NAME>
+                <CODE_VALUE>TRMM0004</CODE_VALUE>
+                <CODE_SCHEMA>TRENCADIS_MAMO</CODE_SCHEMA>
+                  <CODE_MEANING>Axillary Region of Left Female Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <PROPERTIES>
+                  <CARDINALITY max="1" min="1"/>
+                  <CONDITION_TYPE type="M"/>
+                  <EXPRESION_CONDITION xquery=""/>
+                  <DEFAULT_VALUE value="0"/>
+                  <UNIT_MEASUREMENT>
+                    <CONCEPT_NAME>
+                      <CODE_VALUE>000000001</CODE_VALUE>
+                      <CODE_SCHEMA>UNIT_MEASUREMENT</CODE_SCHEMA>
+                      <CODE_MEANING>Boolean Units</CODE_MEANING>
+                    </CONCEPT_NAME>
+                  </UNIT_MEASUREMENT>
+                </PROPERTIES>
+              </NUM>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>TRMM0006</CODE_VALUE>
+                  <CODE_SCHEMA>TRENCADIS_MAMO</CODE_SCHEMA>
+                  <CODE_MEANING>Inframammary Sulcus  of Left Female Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <PROPERTIES>
+                  <CARDINALITY max="1" min="1"/>
+                  <CONDITION_TYPE type="M"/>
+                  <EXPRESION_CONDITION xquery=""/>
+                  <DEFAULT_VALUE value="0"/>
+                  <UNIT_MEASUREMENT>
+                    <CONCEPT_NAME>
+                      <CODE_VALUE>000000001</CODE_VALUE>
+                      <CODE_SCHEMA>UNIT_MEASUREMENT</CODE_SCHEMA>
+                      <CODE_MEANING>Boolean Units</CODE_MEANING>
+                    </CONCEPT_NAME>
+                  </UNIT_MEASUREMENT>
+                </PROPERTIES>
+              </NUM>
+              <NUM>
+                <CONCEPT_NAME>
+                  <CODE_VALUE>TRMM0008</CODE_VALUE>
+                  <CODE_SCHEMA>TRENCADIS_MAMO</CODE_SCHEMA>
+                  <CODE_MEANING>Intermammary Sulcus  of Left Female Breast</CODE_MEANING>
+                </CONCEPT_NAME>
+                <PROPERTIES>
+                  <CARDINALITY max="1" min="1"/>
+                  <CONDITION_TYPE type="M"/>
+                  <EXPRESION_CONDITION xquery=""/>
+                  <DEFAULT_VALUE value="0"/>
+                  <UNIT_MEASUREMENT>
+                    <CONCEPT_NAME>
+                      <CODE_VALUE>000000001</CODE_VALUE>
+                      <CODE_SCHEMA>UNIT_MEASUREMENT</CODE_SCHEMA>
+                      <CODE_MEANING>Boolean Units</CODE_MEANING>
+                    </CONCEPT_NAME>
+                  </UNIT_MEASUREMENT>
+                </PROPERTIES>
+              </NUM>
+            </CHILDS>
+          </CONTAINER>
+        </CHILDS>
+      </CONTAINER>
+    </CHILDS>
+  </CONTAINER>
+<DICOM_SR>
+
+\end{lstlisting}
