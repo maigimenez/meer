@@ -250,9 +250,95 @@ En la figura \ref{fig:arquitectura_android} vemos un esquema de la arquitectura 
 
 
 \subsection{Segmentación}
-La segmentación es uno de los problemas 
+El hecho de que exista una amplia gama de dispositivos que utilizan Android como sistema operativo también tiene una parte negativa y es que los terminales más antiguos ejecutan versiones obsoletas de Android y no es posible actualizarlos. Lo que lleva a que en el mercado convivan distintas versiones de Android.\par
 
+La segmentación es uno de los problemas con los que tiene que lidiar Android. En la actualidad conviven 7 distribuciones de Android.\par
+Desde la web de Android \cite{android} mantienen una tabla con el porcentaje de dispositivos que usan cada versión. Se trata de una tabla como \ref{android:distro}.\medskip\par
+
+\begin{table}
+\begin{center}
+
+  
+  \begin{tabular}{ |l|l|l|l| }
+    \hline
+    \rowcolor{RubineRed} {\color{White} Versión} & {\color{White} Nombre }& {\color{White} Nivel API }& {\color{White} Distribución} \\ \hline
+    1.6 & Donut & 4 & 0.1\%  \\ \hline
+    2.1 & Eclair & 7 & 1.2\%  \\ \hline
+    2.2 & Froyo & 8 & 2.5\%  \\ \hline
+    2.3-2.3.2 & Gingerbread & 9 & 0.1\%  \\ \hline
+    2.3.3-2.3.7 & Gingerbread & 10 & 33.0\%  \\ \hline
+    3.2 & Honeycomb & 13 & 0.1\%  \\ \hline
+    3.2 & Ice Cream Sandwich & 15 & 22.5\%  \\ \hline
+    4.1 & JellyBean & 16 & 34.0\%  \\ \hline
+    4.2 & JellyBean & 17 & 6.5\%  \\ \hline
+    
+    \end{tabular}
+\end{center}
+\caption{Distribución de las versiones de la plataforma Android}
+  \label{android:distro}
+\end{table}
+
+Lo que recomienda Google a la hora de seleccionar una versión de Android es que lleguemos a una solución de compromiso entre las características que necesitamos utilizar de la API y el porcentaje de dispositivos en los que nuestra aplicación se podrá instalar.\par
 
 \subsection{Tabletas e interfaces táctiles de grandes dimensiones}
+Las pantallas táctiles de los móviles facilitan la interacción con los usuarios, pero cuanto más grande son las pantallas más sencillo es el proceso. Por lo tanto planteamos este proyecto centrándonos en tabletas de al menos 10 pulgadas, y teniendo en mente dispositivos de mayores dimensiones.\medskip\par
+A partir de la versión 3.2 \emph{Honeycomb}, Google hace un profundo rediseño de su plataforma para adaptarse a las tabletas y el resto de dispositivos con altas resoluciones. A partir de esta versión introducen mecanismos específicos paras trabajar con pantallas más grandes.\par
+Android permite establecer la versión mínima necesaria para ejecutar la aplicación (\emph{android:minSdkVersion}), en nuestro caso escogeremos \emph{Honeycomb}, pues se trata de la primera versión que soporta directamente tabletas. Sin embargo para de seleccionar la versión para la que diseñaremos la aplicación tendremos en cuenta las características que nos ofrecen \emph{Honeycomb, Ice cream y JellyBean} y el porcentaje de dispositivos que las soportan.\par
+
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=0.8]{./imgs/esquemas/chart.png}
+\caption{Gráfico con la distribución de las versiones de la plataforma Android}
+\label{fig:android_distribucion}
+\end{figure}
+Vemos el gráfico con la distribución de versiones de la SDK entre los dispositivos Android en la figura \ref{fig:android_distribucion}.
+
+
+\begin{itemize}
+  \item \emph{Honeycomb}:
+    \begin{itemize} 
+      \item Presenta una nueva interfaz de usuario.
+      \item Gráficos acelerados por hardware.
+      \item Multiselección
+      \item Soportada por el 63.1\% de los dispositivos.
+    \end{itemize}
+    \item \emph{Ice cream Sandwich}:
+    \begin{itemize} 
+      \item Unificación de la interfaz de usuario.
+      \item Mejora la aceleración gráfica.
+      \item Mejora el soporte a múltiples pantallas. 
+      \item Soportada por el 63\% de los dispositivos.
+    \end{itemize}
+  \item \emph{JellyBean}:
+    \begin{itemize} 
+      \item Simplificada la navegación.
+      \item Mejora el comportamiento de los dispositivos.
+      \item Mejora las notificaciones
+      \item Soportada por el 40.5\% de los dispositivos.
+    \end{itemize}
+\end{itemize}
+A la vista de esto, optamos por que la aplicación que se generara a partir de un informe DICOM-SR fuera dirigida a Ice Cream Sandwich, puesto que ya tiene la mayor parte de las mejoras significativas de Android para tabletas y es soportada por un importante número de dispositivos.\par
+Si en el futuro aparecieran mejoras que creyereamos indispensables siempre podríamos modificar las plantillas con el código  que genera la aplicación para utilizar otra versión de Android.\par
+
 
 \section{Python}
+La elección óptima de un lenguaje de programación para un proyecto determinado depende de varios factores: el equipo de desarrollo, las características del propio proyecto, las características del lenguaje\ldots\par
+En este proyecto lo fundamental es la generación de código y uno de los puntos fuertes de este paradigma es que el lenguaje de programación que utilizamos para generar la aplicación y el lenguaje de la propia aplicación no tienen porque coincidir. En nuestro caso el lenguaje de la aplicación viene fijado por el problema que queremos resolver. Sin embargo podremos elegir el lenguaje para generar el código que más se adapte a nuestras necesidades.\par
+Las características que debe tener un lenguaje de programación para ser apropiado para la generación de código son las siguientes \cite{herrington2003code}:
+\begin{itemize}
+\item Deben ser muy eficientes en la lectura, análisis gramatical y escritura de texto.
+\item Deben disponer de mecanismos para crear plantillas de texto fácilmente.
+\item Si soportan de manera nativa XML es útil aunque siempre se pueden incluir librerías externas para leer y manipular XML.
+\item Deben ser multiplataforma.
+\item La velocidad de ejecución del lenguaje no es un punto clave porque se ejecutará en producción. Es la aplicación que genere la que debe tener un buen rendimiento.
+\item Su desarrollo y mantenimiento debe ser sencillo. 
+\end{itemize}
+\medskip\par
+Pensando en todos estos puntos decidimos utilizar Python como lenguaje para generar el código de la aplicación Android.\par
+Python es un lenguaje de alto nivel multipropósito y multiplataforma diseñado por Guido van Rossum en 1991. Es un lenguaje que fomenta la escritura de código legible con una sintaxis sencilla. Por su simplicidad muchas veces se utiliza como un lenguaje de scripting pero es un lenguaje suficientemente potente para utilizarlo en otros muchos contextos.\par
+La implementación más común de Python esta escrita en C, se trata de CPython. Es una implementación de código abierto y gratuita, gestionada por la asociación sin ánimo de lucro  de Python (\emph{Python Software Foundation}) \cite{python}.\medskip\par
+Uno de los puntos fuertes de este lenguaje es su amplia librería estándar que nos permite hacer análisis sintáctico, acceder a la API de XML, utilizar expresiones regulares, hacer uso de plantillas,\ldots de manera simple.\par
+Es especialmente apropiado para este problema porque cumple todas las premisas que debe tener un buen lenguaje para la generación de código.\par
+En 2009 Python lanzó su versión 3.0, la primera versión no compatible con las versiones anteriores. A pesar de que introduce un buen número de mejoras, algunas librerías externas todavía no son compatibles con esta versión. Por esto para este proyecto utilizaremos la versión 2.7 de Python. Aunque existen mecanismos \cite{py:2to3} para portar automáticamente una aplicación de Python 2.x a Python 3.x.\par
+En este proyecto haremos uso de la orientación a objetos, así como de las librerías estándar para gestionar la configuración, el análisis sintáctico y la parte más sencilla de las plantillas. La única librería externa que utilizaremos será Jinja, para la gestión de plantillas más complejas. Hablaremos en detalle de esto en \ref{req:implementacion}, \ref{sec:templates} y \ref{sec:configuracion}.
+

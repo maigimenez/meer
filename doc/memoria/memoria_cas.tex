@@ -1,12 +1,12 @@
 \documentclass[12pt,a4paper,titlepage,twoside]{report}
 \usepackage[T1]{fontenc}
-\usepackage[english, spanish]{babel}
+\usepackage[english, spanish,es-tabla]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[style=spanish]{csquotes}
 
 %Latin modern font
 \usepackage{lmodern}
-
+\usepackage{tabularx}
 %\usepackage[backend=bibtex]{biblatex}
 %\bibliography{bibliografia.bib} % or
 
@@ -23,8 +23,7 @@
 \usepackage{setspace}
 
 % Parámetro para poder usar los colorines
-\usepackage[pdftex,usenames,dvipsnames]{xcolor}
-
+\usepackage[pdftex,usenames,dvipsnames,table]{xcolor}
 %Paquete para justificar el texto
 \usepackage{ragged2e} 
 \usepackage{notoccite}
@@ -109,6 +108,7 @@
 \DeclareCaptionFormat{listing}{\colorbox{RubineRed}{\parbox{\textwidth}{\hspace{15pt}#1#2#3}}}
 \captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white, singlelinecheck=false, margin=0pt, font={bf,footnotesize}}
 
+%\renewcommand{\arraystretch}{1.5}
 
 % Table of contents on the begining of a line. 
 \usepackage{titletoc}
@@ -148,6 +148,8 @@
 \newcommand{\director}{Ignacio Blanquer}
 \newcommand{\codirector}{Damià Segrelles}
 
+\usepackage{longtable}
+
 % Allows to display directory tree, like in the windows explorator
 \usepackage{dirtree}
 \usepackage{pdfpages}
@@ -164,8 +166,8 @@
 
 \begin{document}
 
-%\input{portada_cas}
-\includepdf[pages={1}]{./imgs/portada.pdf}
+\input{portada_cas}
+%\includepdf[pages={1}]{./imgs/portada.pdf}
 
 \begin{abstract}
 El objetivo del siguiente Proyecto Fin de Carrera consiste en el desarrollo de una aplicación que a partir de un esquema de un informe médico, codificado en el estándar DICOM-SR, genere de manera automática una aplicación para dispositivos móviles de tipo Android de modo que facilite la adquisición de datos de pacientes e informes válidos.
@@ -182,8 +184,9 @@ Para ello se plantea como objetivo del PFC,  una aplicación para terminales And
 \newpage
 
 \listoffigures
-\renewcommand\lstlistlistingname{Índice de Código fuente}
+\renewcommand\lstlistlistingname{Índice de código fuente}
 \lstlistoflistings
+\listoftables
 
 \chapter{Introducción}
 \input{intro}
@@ -198,8 +201,17 @@ Para ello se plantea como objetivo del PFC,  una aplicación para terminales And
 \chapter{Tecnologías empleadas en el proyecto}
 \input{tecnologias}
 
-\chapter{Desarrollo}
-\input{desarrollo}
+\chapter{Análisis}
+\input{analisis}
+
+\chapter{Diseño}
+\input{design}
+
+\chapter{Implementación}
+\input{implementacion}
+
+\chapter{Verificación: un caso práctico}
+\input{verificacion}
 
 \chapter{Conclusiones}
 
