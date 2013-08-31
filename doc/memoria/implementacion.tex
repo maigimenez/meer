@@ -1,9 +1,73 @@
 \section{Entorno de trabajo}
+
+A continuación describiremos brevemente el entorno de trabajo que hemos empleado para desarrollar el proyecto y que debemos hacer para reproducir este entorno de desarrollo.\par
+Hemos trabajado indistintamente sobre sistemas operativos basados en Unix, utilizando Mac OS X y Linux; pero el entorno podría reproducirse para trabajar también sobre Windows.\par
+Aunque se trata de un proyecto individual, el código se mantenía bajo un sistema de control de versiones, lo que permite mantener un registro histórico del desarrollo. Mantendremos dos repositorios en Github: uno en el que mantendremos el diseño del framework de Android \cite{meer:android} y otro para desarrollar el generador de código \cite{meer}.\par
+
 \subsection{Python}
-\subsubsection{VirtualEnv}\label{sec:virtualenv}
+La aplicación que genera el código está escrita en Python, así que obviamente necesitaremos el intérprete de Python para poder ejecutarla.\par
+Emplearemos la rama 2.x de Python por los motivos que justificamos en el aparado \ref{sec:tecnologias:python}. En las plataformas en las que hemos estado desarrollando podemos encontrar Python en la versión 2.7, la última versión estable del lenguaje, y es sobre esta versión sobre la que trabajaremos.\par
+
+\subsubsection{Pip y VirtualEnv}\label{sec:virtualenv}
+Uno de los problemas más comunes en el desarrollo son los conflictos entre librerías y la necesidad de replicar entornos de trabajo.\par 
+En Python existen dos herramientas que permiten atajar este problema: pip y virtualenv. \par
+Pip es una herramienta para instalar y gestionar paquetes de Python automáticamente. Instalar un paquete con pip es tan sencillo como indicar el nombre del paquete y la versión, como vemos en el ejemplo \ref{pip}.\par
+
+\begin{lstlisting}[language=bash,label=pip,caption=Instalación de un paquete utilizando pip]
+	$ pip install SomePackage==1.0  
+\end{lstlisting}
+
+También acepta como parámetro para instalar paquetes un fichero las librerías del proyecto, como podemos ver en el ejemplo \ref{pip-req}.\par
+
+\begin{lstlisting}[language=bash,label=pip-req,caption=Instalación de los requisitos de un proyecto utilizando pip]
+	$ pip install requirements.txt  
+\end{lstlisting}
+
+Para conocer las dependencias de un proyecto únicamente tendremos que ejecutar pip con el parámetro \emph{freeze} y nos devolverá un listado con las librerías que necesita este proyecto, que guardaremos en un fichero requirements.txt, lo que nos permitirá replicar el entrono fácilmente. \par
+En esta aplicación únicamente hacemos uso de la librería externa Jinja2, y esta a su vez necesita MarkupSafe y wsgiref. Así que el fichero con los requisitos será como el que vemos en la \ref{requisitos}.\par
+
+\begin{lstlisting}[language=bash,label=requisitos,caption=Requisitos del proyecto]
+	Jinja2==2.7
+	MarkupSafe==0.18
+	wsgiref==0.1.2
+\end{lstlisting}
+
+
+La otra herramienta de la que haremos uso es virtualenv  que  crea entornos virtuales de Python aislados evitando los conflictos de dependencias entre las librerías de un proyecto y permite replicar el entorno fácilmente.\par
+Cada entrono virtual contiene su propia versión de Pip encapsuladas. Lo que permite instalar librerías dentro del entorno que hayamos creado.\medskip\par
+
+La combinación de estos dos paquetes nos permite tener entornos de trabajo con todas las dependencias del proyecto que pueden ser replicados con facilidad. 
+
 \subsection{Android}
 
+Tanto para desarrollar el prototipo como para crear el framework de Android que instanciará los informes DICOM-SR, necesitamos trabajar dentro del entorno de desarrollo de Android.\par
+Para desarrollar una aplicación haremos uso de las siguientes herramientas:
+\begin{itemize}
+\item El kit de desarrollo de Java (JDK).	
+\item La kit de desarrollo de  Android (Android SDK). En nuestro caso necesitaremos la SDK de la versión 3.2.
+\item El IDE de desarrollo Eclipse.
+\item El plugin para Eclipse para poder trabajar con Android. (ADT)
+\end{itemize}
+
+\medskip\par
+Concluyendo, tenemos un entrono de trabajo para el generador de código y otro para el desarrollo de la aplicación framework de Android. Esto nos permite desarrollar de modo independiente cada una de las partes que componen la arquitectura de la solución.
+
+
+\section{Aplicación framework de Android}
+El desarrollo de la solución final sigue la metodología en cascada. Pero necesitamos desarrollar simultáneamente una aplicación Android que nos servirá como esqueleto (o framework) para insertar en ella el código que generemos a partir de un informe DICOM-SR concreto.\par 
+Para esta aplicación Android necesitamos que el usuario valide las decisiones de diseño e interacción que hemos tomado, por lo tanto ya durante la etapa de diseño elaboramos un prototipo como ya hemos explicado en el apartado \ref{prototipo}.\par
+
+Este mismo prototipo lo haremos evolucionas para que nos sirva como esqueleto para las aplicaciones generadas. Simplemente eliminaremos del prototipo todas las partes que correspondan a un informe concreto, y las sustituiremos por el código generado automáticamente. Y añadiremos las funcionalidades que sean genéricas para todas las aplicaciones que se generan a partir de informes DICOM-SR. \medskip\par
+
+Durante el desarrollo de este prototipo nos dimos cuenta que algunas de las pantallas diseñadas en la etapa anterior no podían generalizarse fácilmente. Por ejemplo, en las figuras  \ref{fig:mockup:tree} y \ref{fig:mockup:treenodes}  veíamos todas las posibles lesiones de todos los órganos de este informe como no siempre habrán dos órnagos involucrados en un informe, esta pantalla no podía generalizarse.\par
+Decidimos entoces ordenar las pantallas siguiendo la estructura propia del informe. Si bien la solución propuesta en el apartado \ref{sec:ui-mockup} agrupa el conocimiento de una forma algo más simple para el usuario final que únicamente sirva para un subconjunto de informes médicos hace que la descartemos. Optando por una solución genérica que permita transformar en una aplicación Android cualquier plantilla de informe médico.\medskip\par  
+
+Para no duplicar información, podremos ver las modificaciones realizadas en la aplicación esqueleto en el apartado \ref{sec:appfinal}.\par
+Resumiendo hemos evolucionado el prototipo desarrollado en la etapa anterior para poder instanciar todo tipo de infores médicos. De esta aplicación Android, eliminamos los fragmentos que pertenecen a un informe concreto quedándonos el esqueleto que después completaremos con el código generado automáticamente. 
+
+
 \section{Analizador sintáctico}
+
 \section{Estructura de datos para almacenar un informe DICOM-SR}
 
 \section{Generador de la aplicación Android}
@@ -12,12 +76,12 @@
 \subsubsection{String.Template}
 \subsubsection{Jinja}
 
-\subsection{Generador del modelo}
+\subsection{Generador del modelo}\label{sec:generacion}
 \subsection{Generador de la vista}
 \subsubsection{Generador de la interfaz de usuario}
 \subsubsection{Generador de las cadenas de texto}
 
 \subsection{Generador del controlador}
-\subsection{Generador de las actividades}
+\subsubsection{Generador de las actividades}
 
 \section{Generador de la plantilla de resultados}
