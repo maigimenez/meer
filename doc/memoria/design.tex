@@ -8,31 +8,31 @@ Nuestro objetivo último es disponer de una aplicación Android para una determi
 
 \subsubsection{Justificación para desarrollar un aplicación nativa para Android}
 
-En este proyecto generamos una aplicación nativa para Android. Antes de entrar en profundidad a describir la anatomía de una aplicación Android, dedicaremos unas líneas a justificar la decisión de escribir una aplicación nativa para Android en lugar de desarrollar una aplicación genérica en HTML5, o utilizando frameworks como Phonegap \cite{phonegap}, Titanium \cite{titanium} o Corona \cite{corona} para crear una aplicación híbrida, o ya que nuestro generador de código está escrito en Python porque no utilizar Python también en Android mediante el framework Kivy\cite{kivy}.\medskip\par
+En este proyecto generamos una aplicación nativa para Android. Antes de entrar en profundidad a describir la anatomía de una aplicación Android, dedicaremos unas líneas a justificar la decisión de escribir una aplicación nativa para Android en lugar de desarrollar una aplicación genérica en HTML5, o utilizando frameworks como Phonegap \cite{phonegap}, Titanium \cite{titanium} o Corona \cite{corona} para crear una aplicación híbrida o ya que nuestro generador de código está escrito en Python porque no utilizar Python también en Android mediante el framework Kivy\cite{kivy}.\medskip\par
 
 Comenzaremos por argumentar esta última opción ya que es también la más sencilla de rebatir. Que escribamos el generador de código en un lenguaje no implica que el software generado deba estar escrito en ese mismo lenguaje, de hecho esta disociación es un punto fuerte de la generación de código, como ya explicamos en el apartado \ref{sec:generacion-codigo}.\par 
-La utilización de Kivy está justificada cuando queremos hacer una aplicación multiplataforma, para dispositivo móviles y de escritorio, sin necesidad de reescribir del código. Aporta la potencia y simplicidad de Python y está recomendado para el desarrollo de juegos o aplicaciones con gran carga gráfica, ya que en el caso de aplicaciones genéricas la interfaz que crea este framework no es la más apropiada.\par
-En nuestro caso, la aplicación final es un formulario,  y una de las premisas que nos hemos marcado es que sea intuitiva y fácil de utilizar, por lo tanto los elementos de la interfaz no deberán sorprender al usuario y la interacción con el usuario debe ser ágil. Como generar código en Python supone el mismo esfuerzo que generarlo en cualquier otro lenguaje y no nos ofrece ventajas adicionales descartamos esta opción.\medskip\par
+La utilización de Kivy está justificada cuando queremos hacer una aplicación multiplataforma, para dispositivo móviles y de escritorio, sin necesidad de reescribir del código Kivy. Aporta la potencia y simplicidad de Python y está recomendado para el desarrollo de juegos o aplicaciones con gran carga gráfica, ya que en el caso de aplicaciones genéricas la interfaz que crea este framework no es la más apropiada.\par
+En nuestro caso, la aplicación final es un formulario,  y una de las premisas que nos hemos marcado es que sea intuitiva y fácil de utilizar, por lo tanto los elementos de la interfaz no deberán sorprender al usuario y la interacción con el usuario debe ser ágil. Generar código en Python supone el mismo esfuerzo que generarlo en cualquier otro lenguaje. Por ello esta opción no nos ofrece ventajas adicionales así que descartamos esta opción.\medskip\par
 
-La siguiente opción sería desarrollar una aplicación en HTLM5.\par
+La siguiente opción sería desarrollar una aplicación en HTLM5.
 Las ventajas principales que tiene esta opción es la rapidez en el desarrollo y que no es necesario pasar un proceso de validación de la misma. Por otra parte se resiente la velocidad de ejecución y no se tiene acceso a todas las funcionalidades de los teléfono o tabletas para las que se desarrolla.\par 
 No vamos a necesitar funcionalidades complejas pero el hecho de que la velocidad de ejecución se reduzca respecto a las aplicaciones nativas empeora la usabilidad y por tanto el índice de aceptación de los usuarios y este si es un punto relevante para nuestro objetivo, por lo tanto también descartamos esta opción.\medskip\par
 
-Finalmente quedaría la opción de desarrollar una aplicación híbrida.\par
+Finalmente quedaría la opción de desarrollar una aplicación híbrida.
 Esta opción puede hacer uso de las funcionalidades de las tabletas y puede funcionar a la misma velocidad que una aplicación nativa, además tiene aporta el beneficio de que las aplicaciones sobre estos frameworks son más sencillas de desarrollar, pero aportan las complicaciones propias de instalar y trabajar con el framework.\par
-Nuestro objetivo es que con un fichero DICOM-SR se genere de automáticamente una aplicación Android. El esqueleto de la aplicación en Android podemos tenerlo preparado e instanciar la aplicación para el fichero concreto, en cambio incluir un framework introduce un nivel más que nos complica la generación automática. Y respecto a la complicación del desarrollo, como el código que generamos lo hacemos mediante generación automática guiada por modelos, desarrollar una aplicación en Anroid no implica un esfuerzo mucho mayor que hacerlo para algún framework para aplicaciones híbridas.\medskip\par
+Nuestro objetivo es que con un fichero plantilla basado en DICOM-SR se genere automáticamente una aplicación Android. El esqueleto de la aplicación en Android podemos tenerlo preparado e instanciar la aplicación para el fichero concreto, en cambio incluir un framework introduce un nivel más que nos complica la generación automática. Y respecto a la complicación del desarrollo, como el código que generamos lo hacemos mediante generación automática guiada por modelos, desarrollar una aplicación en Android no implica un esfuerzo mucho mayor que hacerlo para algún framework para aplicaciones híbridas.\medskip\par
 
-Por lo tanto la opción que más se adapta a las necesidades concretas de este proyecto es el desarrollo de una aplicación nativa para Android.\par
+Por lo tanto la opción que más se adapta a las necesidades concretas de este proyecto es el desarrollo de una aplicación nativa para Android. Ya que la aplicación que obtenemos como resultado está optimizada para dispositivos Android y es capaz de aprovechar todas las funcionalidades que necesitemos. Además crear un framework sobre el que instanciar los informes DICOM-SR es relativamente sencillo y el desarrollo no es más complicado que optando por otras soluciones, gracias a la generación automática de código. \par
 
 \subsubsection{Esquema de una aplicación Android}
-Las aplicaciones Android las aplicación siguen normalmente el patrón de desarrollo Modelo-Vista-Controlador(MVC).
+Las aplicaciones Android siguen normalmente el patrón de desarrollo Modelo-Vista-Controlador(MVC).
 %, o siendo más específicos el patrón de desarrollo Modelo-Vista-Presentador (MVP) que es una evolución del anterior. 
 El modelo y los presentadores o controladores se programan en Java y para definir la interfaz de usuario se utilizan ficheros XML.\par
 Una aplicación que sigue este patrón de diseño se compone por:
 \begin{itemize}
 \item \textbf{Vista}: Contiene la interfaz de usuario y las cadenas de texto para internacionalizar dicha interfaz.\par
 \item \textbf{Modelo}: Es la información del sistema, encapsula el estado del sistema. 
-\item \textbf{Controlador}: Responde a los eventos generados por la vista y interactua con el modelo. 
+\item \textbf{Controlador}: Responde a los eventos generados por la vista e interactua con el modelo. 
 \end{itemize}
 
 \begin{figure}[ht]
@@ -46,11 +46,11 @@ En la figura \ref{fig:mvc}, vemos el esquema del patrón de desarrollo MVC aplic
 Las partes de las que se compone una aplicación Android son las siguientes:
 \begin{itemize}
 \item \textbf{Vista}: La vista de la aplicación se desarrolla mediante ficheros XML. La vista en Android se compone fundamentalmente por dos elementos: los ficheros XML que definen la interfaz de usuario, que podemos encontrar en \emph{\textbackslash{res}\textbackslash{layout}} y por otra parte tenemos los ficheros XML con las cadenas de texto que se utilizarán en la interfaz, correctamente internacionalizadas y almacenadas en \emph{\textbackslash{res}\textbackslash{values}}. Adicionalmente se puede definir estilos para los elementos de la interfaz gráfica, análogamente a como se hace en CSS, estos ficheros de estilo los podemos encontrar también en \emph{\textbackslash{res}\textbackslash{values}}. Para soportar distintos tipos de pantalla en Android, las imágenes y los estilos se organizan dentro de carpetas determinadas en la aplicación Android y en función de la resolución del dispositivo se cargarán unas u otras.
-\item \textbf{Modelo}: El modelo en para una aplicación Android no difiere del modelo en otro lenguaje. Se trata de una serie de clases con la información del sistema. En nuestro caso serán las clases que contengan la información del informe médico. Encapsularemos el modelo dentro del paquete \emph{model}.
+\item \textbf{Modelo}: El modelo en una aplicación Android no difiere del modelo en otro lenguaje. Se trata de una serie de clases con la información del sistema. En nuestro caso serán las clases que contengan la información del informe médico. Encapsularemos el modelo dentro del paquete \emph{model}.
 \item \textbf{Controlador}: Finalmente los controladores en las aplicaciones Android son las Actividades (\emph{Activity}). Las actividades gestionan la interfaz de usuario, interactuan con el usuario y acceden al modelo bien para mostrarlo en la vista o para modificarlo. 
 \end{itemize}
 
-Esta estructura de ficheros de la aplicación Android que nos servirá como framework para instanciar las aplicaciones concretas sobre un informe DICOM-SR y señalando las rutas dónde irán los ficheros que generaremos podemos verla en forma de árbol en la figura \ref{tree:AndroidFramewok}.\par
+Creamos la estructura de una aplicación Android pero sin contenido. Tendremos una serie de directorios, que podemos ver en la figura \ref{tree:AndroidFramewok}, que sigen la organización de vista, modelo y controlador que Android es capaz de interpretar como una aplicación nativa correcta. Esta estructura que hemos creado debemos completarla con el código generado automáticamente a partir de un fichero plantilla basado en DICOM-SR.\par
 
 \begin{figure}
 
@@ -106,7 +106,7 @@ La aplicación que generará el código a partir de un fichero con una plantilla
 El código de la aplicación se estructura de manera lógica en función de las tareas a realizar. Las parte más importantes son las siguientes:
 \begin{itemize}
 \item\emph{Análizador sintáctico}: realiza el análisis sintáctico y almacena la información en una estructura de datos en memoria.
-\item\emph{Generador de código}: a partir del informe DICOM-SR cargado en memoria genera el código necesario para instanciar la aplicación Android.
+\item\emph{Generador de código}: a partir de la plantilla basada en  DICOM-SR cargada en memoria genera el código necesario para instanciar la aplicación Android.
 \item\emph{Gestión de la configuración y los ficheros}: lee la configuración del usuario y la aplica en la generación de código.
 \item\emph{Modelo del informe}: Estructura de datos que almacena en memoria el informe DICOM-SR.
 \end{itemize}
@@ -167,8 +167,8 @@ Para llamar al generador de código, \emph{fromDicomAndroid.py}, y generar los f
 \end{figure}
 \subsubsection{Diagrama de clases}
 A continuación veremos los diagramas de clases de las secciones más relevantes del código.\par
-El código que gestiona la configuración y el generador de código agrupan un conjunto de funciones y veremos su implementación en los apartados \ref{sec:configuracion} y \ref{sec:generacion} respectivamente.\par
-Comenzaremos por ver en la figura \ref{fig:uml-parser}, la clase creada para realizar el análisis sintáctico, extiende de \emph{xml.sax.handler.ContentHandler}, que es el módulo de la librería estándar de Python que implementa la API simple de XML en Python obviamente. \par
+El código que gestiona la configuración y el generador de código agrupan un conjunto de funciones y veremos su implementación en el apartado \ref{sec:generacion}.\par
+Comenzaremos por ver en la figura \ref{fig:uml-parser}, la clase creada para realizar el análisis sintáctico, extiende de \emph{xml.sax.handler.ContentHandler}, que es el módulo de la librería estándar de Python que implementa la API simple de XML en Python. \par
 
 \begin{figure}[ht]
 \centering
@@ -235,7 +235,7 @@ En el esquema de la figura \ref{fig:uxui} podemos ver los roles que intervienen 
 Para diseñar la experiencia de usuario debemos analizar el problema desde el punto de vista del usuario, pensar el uso que el usuario hará de la herramienta que vamos a crear y como se integrará en su rutina. Analizamos el trabajo facultativo, así como los datos que debe contener un informe médico estructurado, a partir de estos datos diseñaremos la interacciones que realizará el usuario con la aplicación.\par
 Después de varias iteraciones con los prototipos llegamos a la conclusión de que la forma más coherente y genérica de estructurar la aplicación es que cada pantalla corresponda a los datos de un nivel del informe estructurado. Además en cada una de estas pantallas el usuario podrá acceder a un resumen del informe que esta introduciendo, así como la posibilidad de navegar entre niveles de manera intuitiva y acceder a validar la información en cualquier momento.Podemos ver la primera iteración del diseño de la experiencia en el apartado \ref{sec:ui-mockup}.\medskip\par
 
-Simultáneamente al diseño de la interacción, diseñaremos la interfaz de usuario.\par
+Simultáneamente al diseño de la interacción, diseñaremos la interfaz de usuario.
 Veremos en el apartado \ref{sec:estilo}, la guía de estilo que hemos definido para este proyecto.\par
 
 \subsection{Guía de estilo}\label{sec:estilo}
@@ -260,7 +260,7 @@ Con la versión 3.2 de Android se introduce \emph{Roboto}, una tipografía de pa
 Se trata una tipografía que favorece la lectura en dispositivos digitales por no tener remates, porque la mancha está balanceada y los ojos de los caracteres son amplios.\par
 
 \subsubsection{El esquema de color}
-Finalmente hablaremos del esquema de color escogido para la aplicación.\par
+Finalmente hablaremos del esquema de color escogido para la aplicación.
 Aunque lo general para las aplicaciones dentro del ámbito médico es emplear colores fríos en los que predominan los azules y los verdes, porque se trata de colores que sugieren espacios asépticos y  tranquilos.\par
 Empleamos turquesas y grises en la paleta básica y utilizamos como color secundario dos tonos naranjas. La paleta tiene una componente cálida que se aleja de las recomendaciones, pero que confiere a la aplicación un carácter más orgánico, lo que suele aumentar el nivel de aceptación de los usuarios.\par
 Se evitan los grandes contrastes, evitando los blancos y los negros puros en la interfaz, lo que reduce la fatiga visual.\medskip\par
@@ -314,7 +314,7 @@ También en la parte superior encontramos un menú que al desplegarlo nos permit
 \label{fig:mockup:resumen}
 \end{figure}
 
-En la parte inferior tendremos dos botones par validar y finalizer el informe. Al inicio estará habilitado el botón de \emph{validar}, y cuando el usuario introduzca datos podrá validar el informe y tras la validación se habilitará el botón para finalizar que creará un informe DICOM con los datos del estudio introducidos.\par
+En la parte inferior tendremos dos botones para validar y finalizar el informe. Al inicio estará habilitado el botón de \emph{validar}, y cuando el usuario introduzca datos podrá validar el informe y tras la validación se habilitará el botón para finalizar que creará un informe DICOM-SR con los datos del estudio introducidos.\par
 En los dos fragmentos definidos por la cuadricula estructuraremos la información que será diferente para cada nivel del informe médico.\medskip\par
 Un flujo de trabajo normal comenzaría como se muestra en la figura \ref{fig:mockup:ini}. A la izquierda vemos los datos que se deben introducir en el nivel superior (identificador del paciente, identificador del estudio,\ldots) y a la derecha veremos un resumen de las lesiones de la mamografía ya codificadas. Como estamos en el inicio y el usuario no ha introducido lesiones, este resumen está vacío.\par
 Para codificar una nueva lesión simplemente deberá pulsar en el botón con el texto \emph{Añadir Lesiones}.\medskip\par
@@ -367,7 +367,6 @@ Al pulsar sobre el icono situado a la derecha de la lesión se despliegan las ac
 
 Pongámonos en el caso ahora de que el usuario quiere editar una lesión, la aplicación le redirigiría a una pantalla como la que muestra la figura \ref{fig:mockup:edit} con los datos de la lesión a modificar.\par
 Si por algun motivo, el usuario deseara volver atrás sin guardar los cambios vería un mensaje advirtiéndolo que los cambios que ha realizado en la lesión, si los hubiera, no se guardarán, como podemos ver en la figura \ref{fig:mockup:warning}.\par
-
 \begin{figure}[ht]
 \centering
 \includegraphics[page=10,scale=0.4]{./imgs/mockup/mockup.pdf}
@@ -382,7 +381,6 @@ Si por algun motivo, el usuario deseara volver atrás sin guardar los cambios ve
 \caption{Mockup: Aviso de que no se guardan los cambios}
 \label{fig:mockup:warning}
 \end{figure}
-
 
 \begin{figure}[ht]
     \centering

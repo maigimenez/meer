@@ -1,0 +1,29 @@
+Como en todo proyecto siempre hay partes que podrían mejorar y evolucionar. Detectar estas partes del proyecto y proporcionar una solución es una de nuestras tareas, que permitirá al proyecto seguir creciendo y evolucionando.\par
+
+
+\section{Soportar más elementos del estándar DICOM-SR}
+La mejora más obvia es esta: soportar más elementos del estándar DICOM-SR. \par
+Para hacer viable este proyecto en el tiempo de desarrollo previsto soportamos un conjunto limitado de tipos de datos y de atributos del estándar DICOM-SR. Sin embargo este estándar es muy amplio e incluye muchos más elementos de los que nosotros soportamos, de modo que la primera mejora fundamental será ampliar el conjunto de elementos soportados.\par
+Deberemos crear nuevas plantillas para acomodar estos elementos dentro de la aplicación Android.\medskip\par
+
+Por otra parte, un contenedor puede tener definidas una serie de propiedades que el dato introducido por usuario en este contenedor debe cumplir para que sea un dato válido.  Deberíamos crear métodos para comprobar que se cumplan estos requisitos adicionales.\par
+
+
+\section{Ampliar las posibilidades de personalización de la interfaz de usuario}
+Siguiendo con la idea anterior, otro punto interesante para ampliar el PFC será el de crear nuevas posibilidades de personalización de la interfaz de usuario.\medskip\par
+
+Hasta ahora cada elemento (número, texto,\ldots) tiene una plantilla asociada con la distribución que tendrá este elemento en la interfaz de usuario. Pero dependiendo del tipo de informe o de la posición que ocupe el campo dentro del mismo esta distribución podrá ser inapropiada, por lo que se propone crear para cada elemento un conjunto de plantillas que lo presenten y que el sistema y/o el usuario pueda decidir cual es la plantilla más apropiada para el caso concreto que se esté tratando.\medskip\par
+
+El otro punto de la interfaz gráfica que podemos mejorar es permitir personalizar la distribución de los elementos dentro de la cuadrícula. Ahora el sistema muestra la mitad de los elementos en una parte y la otra mitad en la otra. Cuando se trata de atributos e hijos le asigna la mitad derecha a los hijos y la izquierda a los atributos, pero si sólo tenemos hijos o atributos divide los elementos según el orden en el que aparecen en el informe.\par
+Permitir que el usuario determine que elementos deben aparecer en cada parte permitirá crear una interfaz de usuario coherente conceptualmente.\par
+
+\section{Paralelizar el proceso de generación de código}
+Esta mejora es simple puesto que el sistema ya está preparado y permitirá acelerar el proceso de generación de código.\par
+Una vez tenemos el árbol cargado en memoria podemos lanzar un hilo para cada elemento de la aplicación Android que tenemos que generar (modelo, vista y controlador). Cada generador esta programado de forma independientes y como no se modifica el árbol que contiene el informe y cada elemento que debe ser generado se escribe sobre un fichero diferente, no existen problemas de dependencias que compliquen la implementación de esta mejora. \par
+
+
+\section{Incrustar el sistema dentro de una aplicación web}
+Las aplicaciones de consola son muy útiles pero poco intuitivas para el usuario final. Así que lo ideal sería disponer de una aplicación web en la que el personal médico pueda introducir en fichero XML con la plantilla basada en DICOM-SR, personalizar la aplicación Android  para que se adapte a sus necesidades concretas y obtener como resultado la aplicación Android.\par
+Existen distintos frameworks en Python para programar aplicaciones web. Podríamos por ejemplo crear una aplicación Django e incluir en el controlador de esta el generador de código que hemos programado en Python. Con lo que simplemente incluyendo una capa de abstracción a nuestro sistema dispondremos de una aplicación web.\par
+El usuario podría seleccionar gráficamente la plantilla que desea para cada elemento del informe DICOM-SR así como su distribución dentro de la cuadrícula, también podría personalizar aspectos gráficos como el esquema de color. De este modo el usuario podrá adaptar la aplicación final al informe de entrada y a sus preferencias personales.\par
+

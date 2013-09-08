@@ -1,12 +1,12 @@
-En el capítulo \ref{intro} hemos planteado el problema y una posible solución al mismo. El objetivo tanto del capítulo anterior como este es el de explicar los detalles de implementación de la solución que hemos propuesto.\par 
+En el capítulo \ref{intro} hemos planteado el problema y una posible solución al mismo. El objetivo tanto del capítulo anterior como este es el de sentar las bases teóricas y tecnológicas de la solución que hemos propuesto.\par 
 Si en el capítulo  \ref{arte} repasábamos el estado del arte y sentábamos las bases teóricas del proyecto, en este capítulo describiremos la tecnología de la que hacemos uso para ejecutar de solución que proponemos. Además justificaremos los motivos que nos han llevado a seleccionar esta tecnología y no otra.\par
 
-\section{Dicom SR}\label{dicomSR}
-En primer lugar hablaremos de la tecnología que nos impone el proyecto. Los PACs utilizan el estándar DICOM-SR y como nuestro objetivo es que la solución se integre en el ecosistema existente en los centros médicos deberemos emplear este estándar.\medskip\par
+\section{DICOM-SR}\label{dicomSR}
+En primer lugar hablaremos de la tecnología que nos impone el proyecto. Los PACs utilizan la extensión del estándar DICOM para informes estructurados(DICOM-SR) y como nuestro objetivo es que la solución se integre en el ecosistema existente en los centros médicos deberemos emplear este estándar.\medskip\par
 
 \subsection{Definición}
-El estándar DICOM-SR se incluye dentro del suplemento 23 del estándar de imagen médica DICOM. Describe una arquitectura de documento que permite compartir, almacenar y transmitir información de informes médicos estructurados \cite{hussein2004dicom}.\par
-Se diseñó con la intención de suplir la brecha entre la información contenida en las imágenes y la información que los profesionales médicos introducen en sus informes. Los ficheros DICOM-SR almacenan de forma no ambigua y jerárquica todos los conceptos que podemos encontrar en un informe médico tradicional y además pueden incluir referencias a:
+DICOM-SR se incluye dentro del suplemento 23 del estándar de imagen médica DICOM. Describe una arquitectura de documento que permite compartir, almacenar y transmitir información de informes médicos estructurados \cite{hussein2004dicom}.\par
+Se diseñó con la intención de suplir la brecha entre la información contenida en las imágenes y la información que los profesionales médicos introducen en estos. Los ficheros DICOM-SR almacenan de forma no ambigua y jerárquica todos los conceptos que podemos encontrar en un informe médico tradicional y además pueden incluir referencias a:
 \begin{itemize}
 	\item Imágenes en formato DICOM. 
 	\item Informes de estudios previos.
@@ -33,33 +33,33 @@ A pesar de los problemas que surgen en la definición y en la implementación de
 	\item Las imágenes DICOM y los informes DICOM-SR comparten la misma cabecera que contiene información acerca del paciente, 	lo que mejora el registro de información médica.
 	\item El informe incluye medidas numéricas de las evidencias encontradas, que redundará en la precisión del informe.
 	\item Permite ejecutar acciones automáticas sobre los informes permitiendo la minería de datos.
-	\item Se enfatizan los contenidos. El informe en DICOM-SR no guarda información de cómo debe mostrarse al usuario.
+	\item Se enfatizan los contenidos. El informe en DICOM-SR no guarda información de cómo debe mostrarse al usuario, separa el contenido de la presentación de los datos.
 	\item Permite la transformación a otros formatos. 
 	\item Permite la integración con sistemas que reconozcan el habla. 
 \end{itemize} 
 Como podemos comprobar el desarrollo del estándar tiene un impacto beneficioso directamente sobre la práctica clínica, es por esto que en los últimos 5 años ha crecido el interés de la comunidad científica por explotar el estándar DICOM-SR.\par
 
 \subsection{Estructura de un informe médico estructurado} \label{dicomsr:ficheros}
-A continuación describiremos las características de un informe médico siguiendo el estándar DICOM-SR.\par
-Un fichero DICOM-SR organiza el informe mediante contenedores \textit{<CONTAINER>}. Los contenedores no almacenan la información, únicamente la estructuran. Los contenedores tienen hijos \textit{<CHILDS>}, y es dentro de los hijos dónde se almacena la información correspondiente a un informe concreto. Cada elemento de información se agrupa con las etiquetas con el tipo del valor que designan el tipo de elemento que se almacena en el campo. En nuestro proyecto soportamos las siguientes:
+A continuación describiremos las características de un informe médico DICOM-SR representado siguiendo el formato XML.\par
+En un fichero XML que contiene un informe médico DICOM-SR, la información se organiza mediante contenedores \textit{<CONTAINER>}. Los contenedores no almacenan la información, únicamente la estructuran. Los contenedores tienen hijos \textit{<CHILDS>}, y es dentro de los hijos dónde se almacena la información correspondiente a un informe concreto. Cada elemento de información se agrupa con las etiquetas con el tipo del valor que designan el tipo de elemento que se almacena en el campo. En nuestro PFC soportamos las siguientes, aunque existen otros muchos:
 \begin{itemize} 
  	\item \textit{<DATE>}: almacena fechas.
  	\item \textit{<TEXT>}: almacena texto sin formato.
  	\item \textit{<NUM>}: almacena enteros o boleanos.
  	\item \textit{<CODE>}: almacena campos multievaluados.
  \end{itemize}
-Dentro de las secciones definidas por estas etiquetas de tipo valor dónde encontramos los datos del informe médico en pares de elementos clave-valor. Para designar la clave utilizamos la etiqueta \textit{<CONCEPT\_NAME>}, mientras que para referirnos al valor de este contenedor utilizamos la etiqueta \textit{<VALUE>}.
-En el ejemplo de \ref{dicom-report-tags} podemos ver como se codifica el identificador \textit{M001} de una lesión de tipo masa. Vemos un contenedor que abarca el concepto \textit{masa} y entre los hijos encontramos el identificador de la masa que es de tipo texto.\par
-En el campo valor, \textit{<VALUE>}, podremos encontrar:
+Dentro de las secciones definidas por estas etiquetas de tipo valor encontramos los datos del informe médico en pares de elementos clave-valor. Para designar la clave utilizamos la etiqueta \textit{<CONCEPT\_NAME>}, mientras que para referirnos al valor de este contenedor utilizamos la etiqueta \textit{<VALUE>}.
+En el ejemplo de la figura \ref{dicom-report-tags} podemos ver como se codifica el identificador \textit{M001} de una lesión de tipo masa. Vemos un contenedor que abarca el concepto \textit{masa} y entre los hijos encontramos el identificador de la masa que es de tipo texto.\par
+En el campo valor, \textit{<VALUE>}, podremos encontrar entre otros:
 \begin{itemize}
 	\item Texto plano.
 	\item Valores numéricos con sus unidades.
 	\item Fechas.
-	\item Imágenes DICOM.
+	\item Referencias a imágenes DICOM.
 	\item \ldots
 \end{itemize}\par
 
-Un punto importante para alcanzar los objetivos descritos en \ref{dicom:beneficios}, es trabajar con un léxico limitado y bien conocido, por lo que se utilizan diccionarios de conceptos médicos para identificar cada concepto de los que puede aparecer en un informe.Cada concepto del informe se identifica por su \textit{CONCEPT\_NAME} que está formado por tres en partes:
+Un punto importante para alcanzar los objetivos descritos en \ref{dicom:beneficios}, es trabajar con un léxico limitado y bien conocido, por lo que se utilizan diccionarios de conceptos médicos para identificar cada concepto de los que puede aparecer en un informe.Cada concepto del informe se identifica por su \textit{CONCEPT\_NAME} que está formado por tres elementos:
 \begin{itemize}
 	\item \textit{CODE\_SCHEMA}: identifica el diccionario dónde se encuentra el término que estamos definiendo.
 	\item \textit{CODE\_VALUE}: es el código al término médico definido.
@@ -102,12 +102,12 @@ Podemos encontrar el fichero DICOM-SR completo del informe que representa esta f
 \end{figure}
 
 \subsection{Estructura de una plantilla para un informe médico estructurado}\label{dicomsr:plantillas}
-El estándar DICOM-SR, permite gran flexibilidad a la hora de escribir los informes estructurados. Esta característica puede complicarnos mucho el trabajo si cada especialista médico escribiera los informes siguiendo criterios correctos según el estándar pero aleatorios.\par
-Para solucionar esto se crean las plantillas.\par
+El estándar DICOM-SR, permite gran flexibilidad a la hora de escribir los informes estructurados. Esta característica puede complicarnos mucho el trabajo si cada especialista médico escribiera los informes siguiendo criterios correctos según el estándar pero aleatorios.
+Para solucionar esto se crean las plantillas.
 Las plantillas describen cómo debe ser un informe de tipo DICOM-SR, incluye los conceptos que debe tener así como las relaciones de jerarquía entre ellos y las propiedades que deben cumplir: si los conceptos son obligatorios o no, si pueden repetirse a lo largo del informe, \ldots\par 
 Únicamente se guardan los conceptos en las plantillas, los campos correspondientes a los valores  \textit{<VALUE>} se incluirán después cuando el profesional rellene los datos para un paciente concreto.\par
 El formato de las plantillas DICOM-SR es muy similar al de los informes DICOM. Carecen de las etiquetas \textit{<VALUE>} pero incluyen etiquetas \emph{<PROPERTIES>} para especificar las propiedades que deben tener los campos.\par
-En el ejemplo \ref{dicom-template-mass} vemos como se almacenaría un concepto de tipo masa en una plantilla para la exploración de mama. Este contenedor podrá aparecer 0 o más veces en el informe final  (\textit{<CARDINALITY max=``-1'' min=``0''/>}) y lo introduce el usuario (\textit{<CONDITION\_TYPE type=``U''/>}).\medskip\par
+En el ejemplo de código \ref{dicom-template-mass} vemos como se almacenaría un concepto de tipo masa en una plantilla para la exploración de mama. Este contenedor podrá aparecer 0 o más veces en el informe final  (\textit{<CARDINALITY max=``-1'' min=``0''/>}) y lo introduce el usuario (\textit{<CONDITION\_TYPE type=``U''/>}).\medskip\par
 
 
 \lstset{escapechar=@,style=dicom}
@@ -166,7 +166,7 @@ Utilizamos estas plantillas como entrada para nuestro sistema. Tenemos una plant
 	\item Resonancia Magnética
 \end{itemize}
 
-En el caso de las plantillas DICOM-SR la información también se estructura en forma de árbol. En el apéndice \ref{dicom-sr-template}, hemos incluido una plantilla truncada para el informe de una exploración de mama. En este apéndice se describe una plantilla que permite introducir lesiones de tipo masa en la mama derecha y asimetrías en la mama izquierda. El esquema \ref{fig:dicom-template} muestra esta plantilla con su  forma arbórea.\medskip\par
+En el caso de las plantillas la información también se estructura en forma de árbol. En el apéndice \ref{dicom-sr-template}, hemos incluido una plantilla truncada para el informe de una exploración de mama. En este apéndice se describe una plantilla que permite introducir lesiones de tipo masa en la mama derecha y asimetrías en la mama izquierda. El esquema \ref{fig:dicom-template} muestra esta plantilla con su  forma arbórea.\medskip\par
 
 \begin{figure}[ht]
 \centering
@@ -178,26 +178,39 @@ En el caso de las plantillas DICOM-SR la información también se estructura en 
 
 \subsection{Vocabulario}\label{dicomsr:vocabulario}
 Un punto en el que hemos hecho hincapié es en la ventaja que supone que los informes hagan uso de un vocabulario estandarizado. Esto permite hacer referencia a conceptos concretos de manera precisa. Evitando los problemas que supone la barrera lingüística y la falta precisión del lenguaje natural.\medskip\par
-También en lo que respecta al uso de vocabularios médicos DICOM-SR permite gran flexibilidad, permitiendo a los usuarios seleccionar el léxico que más les convenga en cada momento. En un mismo informe estructurado DICOM-SR pueden aparecer varios esquemas.\par
-Los esquemas de codificación más habituales que podemos encontrar son: 
+También en lo que respecta al uso de vocabularios médicos DICOM-SR permite gran flexibilidad, permitiendo a los usuarios seleccionar el léxico que más les convenga en cada momento. En un mismo informe estructurado DICOM-SR pueden aparecer varios vocabularios.\par
+Los vocabularios más habituales que podemos encontrar son: 
 \begin{itemize}
-	\item \emph{RadLex}: léxico desarrollado para cubrir las necesidades de la imagen radiológica. Contiene más de 30.000 términos. \cite{langlotz2006radlex}.
+	\item \emph{RadLex}: léxico desarrollado para cubrir las necesidades de la imagen radiológica. Contiene más de 30.000 términos \cite{langlotz2006radlex}.
 	\item \emph{ICD-10}: léxico generalista que contiene un índice internacional de enfermedades y problemas relacionados con la salud. Está traducido en 42 idiomas \cite{world2004icd}.
-	\item \emph{SNOMED}: se considera la terminología clínica que más términos abarca y que soporta más lenguajes.\cite{stearns2001snomed} Se está convirtiendo en un estándar de facto al estar apoyado por numerosos gobiernos internacionales. \cite{snomed-gov}
+	\item \emph{SNOMED-CT}: se considera la terminología clínica que más términos abarca y que soporta más lenguajes \cite{stearns2001snomed}. Se está convirtiendo en un estándar de facto al estar apoyado por numerosos gobiernos internacionales \cite{snomed-gov}.
 \end{itemize}
 \medskip\par
-Sin embargo estos léxicos también presentan algunos inconvenientes: los conceptos pueden aparecer en varios léxicos, existen léxicos muy específicos para un país o idioma, no todos los léxicos se pueden integrar en DICOM-SR,\ldots\medskip\par
-Para este proyecto utilizaremos los léxicos: \emph{RadLex}, \emph{SNOMED\-CT}, \emph{TRENCADIS\_MAMO} y \emph{UNIT\_MEASUREMENT}.\par
+Sin embargo estos léxicos también presentan algunos inconvenientes: los conceptos pueden aparecer en varios léxicos, existen léxicos muy específicos para un país o idioma\ldots\medskip\par
+Para este proyecto utilizaremos los siguientes léxicos:
+\begin{itemize}
+ \item Estándares internacionales:
+ \begin{itemize} 
+  \item \emph{RadLex}. 
+  \item \emph{SNOMED-CT}.
+ \end{itemize}
+ \item Vocabularios definidos por nostros:
+ \begin{itemize} 
+  \item \emph{TRENCADIS\_MAMO}.
+  \item \emph{UNIT\_MEASUREMENT}.
+ \end{itemize}
+ \end{itemize}
+  \par
 	
 \subsection{Internacionalización}\label{dicomsr:internacionalizacion}
 Las máquinas pueden trabajar con códigos como los que se almacenan en los léxicos médicos, incluso para algunas tareas puede ser incluso más beneficioso que tener que lidiar con secuencias de caracteres, especialmente si estos incluyen caracteres especiales. Pero las personas necesitamos el vocabulario para comprender los conceptos y poder trabajar con ellos.\medskip \par
 
 La internacionalización y localización consiste precisamente en adaptar el software a los distintos idiomas y a las diferencias regionales como puedan ser los formatos de las divisas. No se trata únicamente de traducir las cadenas de texto.\par 
-La internacionalización es la primera parte del proceso, consiste en diseñar y preparar el software que vamos a desarrollar y la localización es el proceso de adaptar el software creado a los distintos idiomas que se soporten.\cite{Uren:1993:ISI:562752}\medskip\par
+La internacionalización es la primera parte del proceso, consiste en diseñar y preparar el software que vamos a desarrollar y la localización es el proceso de adaptar el software creado a los distintos idiomas que se soporten \cite{Uren:1993:ISI:562752}. \medskip\par
 
-Para presentar el informe para los profesionales médicos hacemos uso del texto codificado entre las etiquetas \emph{<CODE\_MEANING>}, sabiendo que algunos de los léxicos que se pueden incluir dentro un informe estructurado DICOM-SR están traducidos a múltiples idiomas, necesitamos encontrar una manera de que el significado del concepto sea diferente para cada lenguaje.\par
+Para presentar el informe a los profesionales médicos hacemos uso del texto codificado en las etiquetas \emph{<CODE\_MEANING>}. Sabiendo que algunos de los léxicos que se pueden incluir dentro un informe estructurado DICOM-SR están traducidos a múltiples idiomas, necesitamos encontrar una manera de que el significado del concepto sea diferente para cada lenguaje.\par
 El estándar DICOM-SR especifica que las cadenas que se introduzcan en el campo \emph{<CODE\_MEANING>} pertenezcan al léxico con el que se esté trabajando, lo que no implica que estos textos deban estar en inglés, pero restringe la posibilidad de implementar soluciones en las que las traducciones no provengan de fuentes oficiales, porque esto nos conduciría de nuevo a la confusión semántica que pretendíamos evitar con el uso de vocabularios.\par
-La solución que se propone en la literatura \cite{clunie2000dicom}, es hacer uso de la codificación del fichero para deducir que lenguaje del mismo, pero aunque se trata de una solución sencilla que no implica tener que trasmitir ni almacenar más información, como varios idiomas pueden utilizar la misma codificación no hay ninguna manera de diferenciarlos siguiendo este método. La otra solución que se propone es utilizar una etiqueta para identificar el idioma. Los ficheros DICOM-SR con los que trabajamos optan por la segunda opción. Utilizan la etiqueta \emph{<CODE\_MEANING>} para un primer idioma y \emph{<CODE\_MEANING2>} para un segundo como podemos ver en el ejemplo \ref{code-meaning}.\par
+La solución que se propone en la literatura \cite{clunie2000dicom}, es hacer uso de la codificación del fichero para deducir el lenguaje del mismo, pero aunque se trata de una solución sencilla que no implica tener que trasmitir ni almacenar más información, si varios idiomas pueden utilizar la misma codificación no hay ninguna manera de diferenciarlos siguiendo este método. La otra solución que se propone es utilizar una etiqueta para identificar el idioma. Los ficheros XML con los que trabajamos optan por la segunda opción. Utilizan la etiqueta \emph{<CODE\_MEANING>} para un primer idioma y \emph{<CODE\_MEANING2>} para un segundo como podemos ver en el ejemplo \ref{code-meaning}.\par
 
 \lstset{escapechar=@,style=dicom}
 \renewcommand*\lstlistingname{Código}
@@ -214,14 +227,14 @@ La solución que se propone en la literatura \cite{clunie2000dicom}, es hacer us
 \end{lstlisting}
 
 
-En nuestro proyecto trabajaremos con plantillas localizadas para castellano e inglés como las que hemos visto en el ejemplo \ref{code-meaning}, así como con plantillas únicamente en inglés sin localizar como los fragmentos vistos en los ejemplos \ref{dicom-report-tags}, \ref{dicom-template-mass} y \ref{dicom-template-bool}
+En nuestro PFC trabajaremos con plantillas localizadas para castellano e inglés como las que hemos visto en el ejemplo \ref{code-meaning}, así como con plantillas únicamente en inglés sin localizar como los fragmentos vistos en los ejemplos \ref{dicom-report-tags}, \ref{dicom-template-mass} y \ref{dicom-template-bool}
 
 \section{Android}
-Los teléfonos móviles inteligentes y las tabletas son tecnologías que ya llevan bastante tiempo entre nosotros, pero es en los últimos cinco años cuando la tecnología ha crecido exponencialmente. El índice de penetración en el mercado supera el 50\% en el caso de China y Estados Unidos, mientras que en Europa encontramos porcentajes inferiores, alrededor del 25\% pero las previsiones estiman que estas tasas crezcan rápidamente.\cite{wiki:smartphones}\par
+Los teléfonos móviles inteligentes y las tabletas son tecnologías que ya llevan bastante tiempo entre nosotros, pero es en los últimos cinco años cuando la tecnología ha crecido exponencialmente. El índice de penetración en el mercado supera el 50\% en el caso de China y Estados Unidos, mientras que en Europa encontramos porcentajes inferiores, alrededor del 25\% pero las previsiones estiman que estas tasas crezcan rápidamente \cite{wiki:smartphones}.\par
 La integración de dispositivos, la posibilidad de acceder a Internet y sobretodo la simplicidad de su uso fomentada por la posibilidad de interactuar con el dispositivo a través de la pantalla táctil, mucho más intuitivo que el teclado y el ratón, junto con un muy buen diseño de interfaces han facilitado la gran adopción de esta tecnología ya que han conseguido ampliar el espectro de usuarios potenciales\medskip\par
 
 Un punto fundamental en el éxito de estas tecnologías es sin duda el nacimiento de Android.\par
-Android es un sistema operativo basado en Linux, diseñado para trabajar con dispositivos móviles con pantallas táctiles. Fue desarrollado inicialmente por Android Inc., que fue comprada por Google en 2005. En el 2007 se forma la Open Handset Alliance: un conglomerado de empresas de hardware, software y telecomunicaciones cuyo objetivo es el de crear un entorno estandarizado para el desarrollo de dispositivos móviles. La OHA disponía de todos los agentes necesarios para revolucionar el mercado de las comunicaciones móviles y es en Octubre de 2008 cuando aparece el primer teléfono inteligente el HTC Dream que corría un Android 1.0.\cite{wiki:android}\medskip\par
+Android es un sistema operativo basado en Linux, diseñado para trabajar con dispositivos móviles con pantallas táctiles. Fue desarrollado inicialmente por Android Inc., que fue comprada por Google en 2005. En el 2007 se forma la Open Handset Alliance: un conglomerado de empresas de hardware, software y telecomunicaciones cuyo objetivo es el de crear un entorno estandarizado para el desarrollo de dispositivos móviles. La OHA disponía de todos los agentes necesarios para revolucionar el mercado de las comunicaciones móviles y es en Octubre de 2008 cuando aparece el primer teléfono inteligente el HTC Dream que corría un Android 1.0. \cite{wiki:android}.\medskip\par
 
 A partir de este momento el desarrollo de Android no ha dejado de crecer, convirtiéndose en una tecnología clave.\par
 Como ya se ha comentado en el apartado \ref{intro}, el uso de terminales móviles inteligentes en la práctica clínica para trabajar con imagen médica ha dado resultados muy satisfactorios. Por lo tanto, es obvio pensar que una aplicación para recopilar informes médicos sobre Android tendrá mejor acogida por parte del personal médico, ya que es más sencillo e intuitivo introducir los datos de los informes DICOM-SR. Y al facilitar esta tarea al personal médico, es más factible que podamos adquirir más informes DICOM-SR con los que realizar estudios posteriores.\par 
@@ -238,9 +251,9 @@ Android es un sistema operativo abierto basado en Linux, cuyo núcleo está escr
 
 En la figura \ref{fig:arquitectura_android} vemos un esquema de la arquitectura Android, compuesta por:
 \begin{itemize}
-\item \emph{Núcleo Linux}: el núcleo es un fork el núcleo de la versión 2.6 de Linux. Sirve de abstracción con el hardware y gestiona los recursos del sistema. 
+\item \emph{Núcleo Linux}: el núcleo es un fork de la versión 2.6 de Linux. Sirve de abstracción con el hardware y gestiona los recursos del sistema. 
 \item \emph{Librerías}: librerías nativas del sistema las utilizará el framework de Android para comunicarse con el hardware. Están escritas en C o C++.
-\item \emph{Android Runtime}: se trata del entrono de ejecución de Android. Se integra con las librerías. Aquí tenemos el conjunto de librerías habituales de java, así como librerías Java específicas para Android. La Dalvik VM, es la máquina virtual de Java que ejecutará la aplicaciones. 
+\item \emph{Android Runtime}: se trata del entorno de ejecución de Android. Se integra con las librerías. Aquí tenemos el conjunto de librerías habituales de java, así como librerías Java específicas para Android. La Dalvik VM, es la máquina virtual de Java que ejecutará la aplicaciones. 
 \item \emph{Framework para aplicaciones}: Capa formada por las clases y servicios que utilizan directamente las aplicaciones de usuario para interactuar con Android. 
 \item \emph{Aplicaciones}: esta última capa incluye todas las aplicaciones del sistema y las instaladas por el usuario, tanto las nativas como las escritas en java.
 
@@ -253,7 +266,7 @@ En la figura \ref{fig:arquitectura_android} vemos un esquema de la arquitectura 
 El hecho de que exista una amplia gama de dispositivos que utilizan Android como sistema operativo también tiene una parte negativa y es que los terminales más antiguos ejecutan versiones obsoletas de Android y no es posible actualizarlos. Lo que lleva a que en el mercado convivan distintas versiones de Android.\par
 
 La segmentación es uno de los problemas con los que tiene que lidiar Android. En la actualidad conviven 7 distribuciones de Android.\par
-Desde la web de Android \cite{android} mantienen una tabla con el porcentaje de dispositivos que usan cada versión. Se trata de una tabla como \ref{android:distro}.\medskip\par
+Desde la web de Android \cite{android} mantienen una tabla con el porcentaje de dispositivos que usan cada versión (tabla \ref{android:distro}).\medskip\par
 
 \begin{table}
 \begin{center}
@@ -282,7 +295,7 @@ Lo que recomienda Google a la hora de seleccionar una versión de Android es que
 
 \subsection{Tabletas e interfaces táctiles de grandes dimensiones}
 Las pantallas táctiles de los móviles facilitan la interacción con los usuarios, pero cuanto más grande son las pantallas más sencillo es el proceso. Por lo tanto planteamos este proyecto centrándonos en tabletas de al menos 10 pulgadas, y teniendo en mente dispositivos de mayores dimensiones.\medskip\par
-A partir de la versión 3.2 \emph{Honeycomb}, Google hace un profundo rediseño de su plataforma para adaptarse a las tabletas y el resto de dispositivos con altas resoluciones. A partir de esta versión introducen mecanismos específicos paras trabajar con pantallas más grandes.\par
+A partir de la versión 3.2 \emph{Honeycomb}, Google hace un profundo rediseño de su plataforma para adaptarse a las tabletas y el resto de dispositivos con altas resoluciones. A partir de esta versión introducen mecanismos específicos para trabajar con pantallas más grandes.\par
 Android permite establecer la versión mínima necesaria para ejecutar la aplicación (\emph{android:minSdkVersion}), en nuestro caso escogeremos \emph{Honeycomb}, pues se trata de la primera versión que soporta directamente tabletas. Sin embargo para de seleccionar la versión para la que diseñaremos la aplicación tendremos en cuenta las características que nos ofrecen \emph{Honeycomb, Ice cream y JellyBean} y el porcentaje de dispositivos que las soportan.\par
 
 \begin{figure}[ht]
@@ -317,11 +330,11 @@ Vemos el gráfico con la distribución de versiones de la SDK entre los disposit
       \item Soportada por el 40.5\% de los dispositivos.
     \end{itemize}
 \end{itemize}
-A la vista de esto, optamos por que la aplicación que se generara a partir de un informe DICOM-SR fuera dirigida a Ice Cream Sandwich, puesto que ya tiene la mayor parte de las mejoras significativas de Android para tabletas y es soportada por un importante número de dispositivos.\par
+A la vista de esto, optamos por que la aplicación que se genera a partir de una plantilla de informe DICOM-SR fuera dirigida a Ice Cream Sandwich, puesto que ya tiene la mayor parte de las mejoras significativas de Android para tabletas y es soportada por un importante número de dispositivos.\par
 Si en el futuro aparecieran mejoras que creyereamos indispensables siempre podríamos modificar las plantillas con el código  que genera la aplicación para utilizar otra versión de Android.\par
 
 
-\section{Python}las\label{sec:tecnologias:python}
+\section{Python}\label{sec:tecnologias:python}
 La elección óptima de un lenguaje de programación para un proyecto determinado depende de varios factores: el equipo de desarrollo, las características del propio proyecto, las características del lenguaje\ldots\par
 En este proyecto lo fundamental es la generación de código y uno de los puntos fuertes de este paradigma es que el lenguaje de programación que utilizamos para generar la aplicación y el lenguaje de la propia aplicación no tienen porque coincidir. En nuestro caso el lenguaje de la aplicación viene fijado por el problema que queremos resolver. Sin embargo podremos elegir el lenguaje para generar el código que más se adapte a nuestras necesidades.\par
 Las características que debe tener un lenguaje de programación para ser apropiado para la generación de código son las siguientes \cite{herrington2003code}:
@@ -340,5 +353,5 @@ La implementación más común de Python esta escrita en C, se trata de CPython.
 Uno de los puntos fuertes de este lenguaje es su amplia librería estándar que nos permite hacer análisis sintáctico, acceder a la API de XML, utilizar expresiones regulares, hacer uso de plantillas,\ldots de manera simple.\par
 Es especialmente apropiado para este problema porque cumple todas las premisas que debe tener un buen lenguaje para la generación de código.\par
 En 2009 Python lanzó su versión 3.0, la primera versión no compatible con las versiones anteriores. A pesar de que introduce un buen número de mejoras, algunas librerías externas todavía no son compatibles con esta versión. Por esto para este proyecto utilizaremos la versión 2.7 de Python. Aunque existen mecanismos \cite{py:2to3} para portar automáticamente una aplicación de Python 2.x a Python 3.x.\par
-En este proyecto haremos uso de la orientación a objetos, así como de las librerías estándar para gestionar la configuración, el análisis sintáctico y la parte más sencilla de las plantillas. La única librería externa que utilizaremos será Jinja, para la gestión de plantillas más complejas. Hablaremos en detalle de esto en \ref{req:implementacion}, \ref{sec:templates} y \ref{sec:configuracion}.
+En este proyecto haremos uso de un paradigma de programación orientado a objetos, así como de las librerías estándar para gestionar la configuración, el análisis sintáctico y la parte más sencilla de las plantillas. La única librería externa que utilizaremos será Jinja, para la gestión de plantillas más complejas. Hablaremos en detalle de esto en los apartados \ref{req:implementacion}, \ref{sec:configuracion} y \ref{sec:templates}.
 

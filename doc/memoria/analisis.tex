@@ -1,19 +1,12 @@
 \section{Análisis de requisitos}
 
-Afrontamos el desarrollo de la aplicación siguiendo las pautas del esquema tradicional de desarrollo de software en cascada. Por la naturaleza del problema alunas etapas se han reducido para poder dedicar más tiempo al desarrollo de la solución.\medskip\par
+Afrontamos el desarrollo de la aplicación siguiendo las pautas del esquema tradicional de desarrollo de software en cascada. Por la naturaleza del problema algunas etapas se han reducido para poder dedicar más tiempo al desarrollo de la solución.\medskip\par
 En el siguiente apartado describiremos los requisitos de la solución que hemos propuesto. Durante esta fase del proyecto analizaremos las necesidades que tienen los usuarios de nuestro sistema.\par
-Muchos de los requisitos vienen definidos por el propio problema y el resto por la solución que proponemos y que hemos descrito a alto nivel en el apartado \ref{solucion}. La complejidad de este proyecto estriba en la propia generación de código a partir de un fichero DICOM-SR. Los casos de uso y los actores se reducen a la mínima expresión.\par
+Muchos de los requisitos vienen definidos por el propio problema y el resto por la solución que proponemos y que hemos descrito a alto nivel en el apartado \ref{solucion}. La complejidad de este proyecto estriba en la propia generación de código a partir de un fichero plantilla basada en DICOM-SR. Los casos de uso y los actores se reducen a la mínima expresión.\par
 Recopilar y analizar los requisitos sienta las bases de nuestro proyecto.\par
 \subsection{Requisitos funcionales}
 \begin{itemize}
-	\item A partir de un fichero con la plantilla de un informe médico en formato DICOM-SR como el fichero incluido en el apéndice \ref{dicom-sr-template} que pertenezca a una de las siguientes ontologías:
-		\begin{itemize}
-			\item 4: Exploración de mama
-			\item 5: Mamografía
-			\item 6: Ecografía.
-			\item 7: Resonancia Magnética
-		\end{itemize}
-		Se generarán los ficheros necesarios para instanciar una aplicación Andoid para esta plantilla que tendrá soporte para 1 o 2 idiomas en función de los idiomas que soporte el fichero DICOM.
+	\item A partir de un fichero con la plantilla de un informe médico en formato DICOM-SR, como el fichero incluido en el apéndice \ref{dicom-sr-template}, que pertenezca a una  ontología, se generarán los ficheros necesarios para instanciar una aplicación Andoid para esta plantilla que tendrá soporte para 1 o 2 idiomas en función de los idiomas que soporte el fichero DICOM.
 	\item Con los ficheros generados el usuario podrá introducirlos en el esqueleto de una aplicación Android. Obteniendo una aplicación Android funcional.
 	\item El entorno para la ejecución del script que genera el código y el de la aplicación esqueleto de Android deben ser fácilmente replicables, para que el usuario pueda genererar sus propias aplicaciones en distintas plataformas. 
 \end{itemize}
@@ -38,7 +31,6 @@ En la tabla \ref{actores}, podemos ver la definición formal de los usuarios que
 
 \begin{table}
 \begin{center}
-
   
   \begin{tabular}{ |b{4cm}||b{3cm}|b{1cm}|b{2cm}|b{1.5cm}| b{1cm}| }
     \hline
@@ -50,7 +42,7 @@ En la tabla \ref{actores}, podemos ver la definición formal de los usuarios que
     \hline
     {\color{RubineRed} Relaciones } & \multicolumn{5}{|l|}{}\\ 
     \hline
-    {\color{RubineRed} Referencias } &  \multicolumn{5}{|l|}{USO1}\\ 
+    {\color{RubineRed} Referencias } &  \multicolumn{5}{|l|}{CONF,GENCOD,INSAND}\\ 
     \hline
     {\color{RubineRed} Autor } &  Mayte Giménez & {\color{RubineRed} Fecha } & 16/08/2013 & {\color{RubineRed} Version } & v1.0 \\ 
     \hline
@@ -68,7 +60,7 @@ En la tabla \ref{actores}, podemos ver la definición formal de los usuarios que
     \hline
     \cellcolor{RubineRed} {\color{White} Comentarios}  \\
     \hline
-	\parbox{15.5cm}{Aunque para ejecutar la aplicación el usuario no requiera ningún tipo de conocimiento del sistema generador de código o de los informes médicos, el usuario debe disponer de un fichero DICOM-SR correctamente elaborado. Además debe de tener la aplicación esqueleto Android para instanciar la aplicación final. Además debe disponer de un dispositivo Android con la versión 3.2 o superior.}    \\
+	\parbox{15.5cm}{Aunque para ejecutar la aplicación el usuario no requiera ningún tipo de conocimiento del sistema generador de código o de los informes médicos, el usuario debe disponer de un fichero plantilla basado en DICOM-SR correctamente elaborado. Además debe de tener la aplicación esqueleto Android para instanciar la aplicación final. Además debe disponer de un dispositivo Android con la versión 3.2 o superior.}    \\
 	\hline
 
     \end{tabular}
@@ -76,7 +68,7 @@ En la tabla \ref{actores}, podemos ver la definición formal de los usuarios que
 	\caption{Actores del sistema}
 	\label{actores}
 \end{table}
-
+\newpage
 \section{Casos de uso}\label{sec:casos-uso}
 \renewcommand*{\arraystretch}{1.5}
 %\begin{table}
@@ -141,11 +133,13 @@ En la tabla \ref{actores}, podemos ver la definición formal de los usuarios que
     \hline
     \multicolumn{6}{|l|}{{\color{RubineRed} Resumen }}  \\ 
     \hline
-   	\multicolumn{6}{|l|}{\parbox{16cm}{El usuario ejecutará el script pasándole el fichero DICOM-SR y el método de internacionalización de este fichero (i18n o default) y el sistema generará los ficheros de código necesarios para instanciar la aplicación Android.}}  \\ 
+   	\multicolumn{6}{|l|}{\parbox{16cm}{El usuario ejecutará el script pasándole el fichero plantilla basado en DICOM-SR y el método de internacionalización de este fichero (i18n o default) y el sistema generará los ficheros de código necesarios para instanciar la aplicación Android.}}  \\ 
     \hline
     \multicolumn{6}{|l|}{\parbox{8cm}{{\color{RubineRed} Curso normal }}}  \\ 
     \hline
-   	1 & \multicolumn{2}{|l|}{\parbox{5cm}{ El usuario ejecuta el script generador de código. Los argumentos serán el fichero DICOM-SR y el método de internacionalización}} & 2 & \multicolumn{2}{|l|}{\parbox{5cm}{El sistema comprueba que el fichero existe y que el método de internacionalización es correcto}}\\
+   	1 & \multicolumn{2}{|l|}{\parbox{5cm}{ El usuario ejecuta el script generador de código. Los argumentos serán el fichero plantilla basado en DICOM-SR y el método de internacionalización}} &  & \multicolumn{2}{|l|}{}\\
+    \hline
+    & \multicolumn{2}{|l|}{} & 2 & \multicolumn{2}{|l|}{\parbox{5cm}{El sistema comprueba que el fichero existe y que el método de internacionalización es correcto}}\\
     \hline
      & \multicolumn{2}{|l|}{} & 3 &  \multicolumn{2}{|l|}{\parbox{5cm}{El sistema realiza el análisis sintáctico del fichero DICOM-SR}}\\
     \hline
@@ -191,7 +185,7 @@ En la tabla \ref{actores}, podemos ver la definición formal de los usuarios que
     \hline
     {\color{RubineRed} Referencias } & \multicolumn{5}{|l|}{}  \\ 
     \hline
-    {\color{RubineRed} Precondición } & \multicolumn{5}{|l|}{\parbox{13cm}{El usuario dispone de los ficheros generados a partir de un fichero DICOM-SR y la estructura de la aplicación Android que los contendrá.} }  \\ 
+    {\color{RubineRed} Precondición } & \multicolumn{5}{|l|}{\parbox{13cm}{El usuario dispone de los ficheros generados a partir de un fichero plantilla basado DICOM-SR y la estructura de la aplicación Android que los contendrá.} }  \\ 
     \hline
     {\color{RubineRed} Postcondición } & \multicolumn{5}{|l|}{\parbox{13cm}{Se crea una aplicación Android para el informe médico DICOM-SR a partir del cual se habían generado los ficheros.}}  \\ 
     \hline
@@ -201,7 +195,7 @@ En la tabla \ref{actores}, podemos ver la definición formal de los usuarios que
     \hline
     \multicolumn{6}{|l|}{\parbox{8cm}{{\color{RubineRed} Resumen }}}  \\ 
     \hline
-   	\multicolumn{6}{|l|}{\parbox{8cm}{ Con el esqueleto de la aplicación Android para este proposito y todos los ficheros necesarios para personalizarla, el sistema instancia la aplicación Android para esta plantilla específica.}}  \\ 
+   	\multicolumn{6}{|l|}{\parbox{16cm}{ Con el esqueleto de la aplicación Android para este proposito y todos los ficheros necesarios para personalizarla, el sistema instancia la aplicación Android para esta plantilla específica.}}  \\ 
     \hline
     \multicolumn{6}{|l|}{\parbox{8cm}{{\color{RubineRed} Curso normal }}}  \\ 
     \hline

@@ -11,20 +11,20 @@ Emplearemos la rama 2.x de Python por los motivos que justificamos en el aparado
 \subsubsection{Pip y VirtualEnv}\label{sec:virtualenv}
 Uno de los problemas más comunes en el desarrollo son los conflictos entre librerías y la necesidad de replicar entornos de trabajo.\par 
 En Python existen dos herramientas que permiten atajar este problema: pip y virtualenv. \par
-Pip es una herramienta para instalar y gestionar paquetes de Python automáticamente. Instalar un paquete con pip es tan sencillo como indicar el nombre del paquete y la versión, como vemos en el ejemplo \ref{pip}.\par
+Pip es una herramienta para instalar y gestionar paquetes de Python automáticamente. Instalar un paquete con pip es tan sencillo como indicar el nombre del paquete y la versión, como vemos en el ejemplo de código \ref{pip}.\par
 
 \begin{lstlisting}[language=bash,label=pip,caption=Instalación de un paquete utilizando pip]
 	$ pip install SomePackage==1.0  
 \end{lstlisting}
 
-También acepta como parámetro para instalar paquetes un fichero las librerías del proyecto, como podemos ver en el ejemplo \ref{pip-req}.\par
+También acepta como parámetro para instalar paquetes un fichero las librerías del proyecto, como podemos ver en el ejemplo de código \ref{pip-req}.\par
 
 \begin{lstlisting}[language=bash,label=pip-req,caption=Instalación de los requisitos de un proyecto utilizando pip]
 	$ pip install requirements.txt  
 \end{lstlisting}
 
 Para conocer las dependencias de un proyecto únicamente tendremos que ejecutar pip con el parámetro \emph{freeze} y nos devolverá un listado con las librerías que necesita este proyecto, que guardaremos en un fichero requirements.txt, lo que nos permitirá replicar el entrono fácilmente. \par
-En esta aplicación únicamente hacemos uso de la librería externa Jinja2, y esta a su vez necesita MarkupSafe y wsgiref. Así que el fichero con los requisitos será como el que vemos en la \ref{requisitos}.\par
+En esta aplicación únicamente hacemos uso de la librería externa Jinja2, y esta a su vez necesita MarkupSafe y wsgiref. Así que el fichero con los requisitos será como el que vemos en el código de \ref{requisitos}.\par
 
 \begin{lstlisting}[language=bash,label=requisitos,caption=Requisitos del proyecto]
 	Jinja2==2.7
@@ -84,9 +84,7 @@ En el segmento de código \ref{DicomParser} vemos como la clase \emph{DicomPasrs
 
 \lstset{escapechar=@,style=python}
 \begin{lstlisting}[label=DicomParser,caption=Clase que analiza sintácticamente un fichero DICOM-SR]
-
 class DicomParser(xml.sax.handler.ContentHandler):
-    
     ...
 
     def parse(self, xml_file):
@@ -99,7 +97,7 @@ class DicomParser(xml.sax.handler.ContentHandler):
         """
         xml.sax.parse(xml_file, self)
         return self._dict_report
-
+    ...
 \end{lstlisting}
 
 Los métodos que hemos sobrecargado para recoger información del informe DICOM-SR son los siguientes:
@@ -125,7 +123,6 @@ Para almacenar la información a medida que vamos leyendo creamos dos clases: \e
 En el segmento de código \ref{SAXContainer} vemos la interfaz de la clase desarrollada para almacenar y gestionar los contenedores DICOM-SR mientras se está leyendo el fichero. Como ya hemos explicado los atributos DICOM-SR se integran dentro del contenedor. Además hemos definido atributos como \emph{open}, \emph{parent} y \emph{tree\_level} para almacenar elementos de la estructura del informe que nos permitirán después construir el árbol.\par
 
 \begin{lstlisting}[label=SAXContainer,caption=Clase que almacena información durante el análisis de un contenedor]
-
 class SAXContainer(object):
     """This class stores a container tag from xml"""
     def __init__(self, concept=Concept(), level=-1, 
@@ -140,19 +137,16 @@ class SAXContainer(object):
         self.properties = properties
 
     def has_concept(self)
-
     def add_attribute(self, attribute)
-
 	def __repr__(self)
 \end{lstlisting}
 
 Dentro de cada contenedor se almacena un concepto DICOM-SR. Son los conceptos los que mantiene la información en si del sistema. Tenemos la clase \emph{Concept} y \emph{Data type} con sus hijos para cada tipo de dato que pueda aparecer en el informe \emph{Num} (números), \emph{Text} (cadenas de texto), \emph{Code} (cadenas de texto de un conjunto de posibilidades) y \emph{Date} (fechas). Hemos visto el diagrama UML en \ref{fig:uml-types}.\medskip\par
 
 
-En \ref{SAXReport} vemos la interfaz  de la clase que almacenará el informe durante el análisis sintáctico del informe. Mantiene informcación de la ontología a la que pertenece el informe médico y una lista con los contenedores DICOM que vamos leyendo.\par
+En el ejemplo de código \ref{SAXReport} vemos la interfaz  de la clase que almacenará el informe durante el análisis sintáctico del informe. Mantiene informcación de la ontología a la que pertenece el informe médico y una lista con los contenedores DICOM que vamos leyendo.\par
 
 \begin{lstlisting}[label=SAXReport,caption=Clase que almacena información durante el análisis de un informe]
-
 class SAXReport(object):
     """This class manages the report while we are reading it from xml"""
     def __init__(self):
@@ -161,13 +155,9 @@ class SAXReport(object):
         self._containers = []
 
     def add_attribute(self, child_level, current_attribute)
-
     def add_container(self, new_container)
-
     def close_level(self, child_level)
-
     def return_parent(self, tree_level)
-	
 	def __repr__(self)
 \end{lstlisting}
 
@@ -222,11 +212,10 @@ Lo que observamos a partir de estas tablas es que cuando generamos la interfaz d
 
 Los informes que hemos empleado en el script para calcular los tiempos eran de tamaño medio y pequeño. Si utilizamos informes más grandes los resultados serían más abultados, pero en definitiva el uso de un árbol para generar el código está justificado.\medskip\par
 
-En la librería estándar de Python no exista una estructura de árbol, así que nos declaramos una clase para árboles que pueda almacenar cualquier tipo de valor. La interfaz de esta clase podemos verla en \ref{defaultTree}.\par
+En la librería estándar de Python no exista una estructura de árbol, así que nos declaramos una clase para árboles que pueda almacenar cualquier tipo de valor. La interfaz de esta clase podemos verla en el ejemplo de código \ref{defaultTree}.\par
 Es un árbol sobre el que se implementan métodos típicos como: recorridos en profundidad y anchura, búsqueda, vaciado, añadir nuevos elementos y la impresión en forma de árbol. Y otros métodos orientados a la tarea para la que vamos a utilizar este árbol como: \emph{get\_set\_data} que devuelve un conjunto de nodos sin elementos repetidos, \emph{get\_flat\_tree} que devuelve el árbol aplanado dentro de una tabla hash o \emph{get\_code\_containers} que nos devuelve una lista con los identificadores de los elementos de árbol de tipo ``CODE''.\par 
 
 \begin{lstlisting}[label=defaultTree,caption=Clase para árboles genéricos]
-
 class Tree():
     """Tree Object, contains value and child references"""
     def __init__(self, value=None, children=None):
@@ -237,31 +226,20 @@ class Tree():
             self.children = children
 
     def breadthFirst(self)
-
     def depthFirst(self)
-
     def __contains__(self, item)
-
     def clear(self)
-    
     def get_set_data(self,containers,attributes)
-
     def is_leaf(self)
-
     def print_tree(self,ident)
-
     def add_node(self, container, parent)
-
     def get_flat_tree(self,flat)
-
     def get_code_containers(self)
-
 \end{lstlisting}
 
-En este árbol los nodos almacenarán la información de un Contenedor DICOM-SR, para esto hemos definido una clase de tipo \emph{Container}. La interfaz de esta clase la podemos ver en \ref{container}. Se trata de una clase muy similar a \ref{SAXContainer}, pero como en este punto ya no necesitamos información acerca de la jerarquía del informe porque esta información se conserva en la estructura del árbol, ni necesitamos información acerca del estado del análisis sintáctico porque ya lo hemos completado, descartamos estos atributos para así aligerar la estructura de datos en la medida de lo posible.\par
+En este árbol los nodos almacenarán la información de un Contenedor DICOM-SR, para esto hemos definido una clase de tipo \emph{Container}. La interfaz de esta clase la podemos ver en el ejemplo de código \ref{container}. Se trata de una clase muy similar a la mostrada en el ejemplo de código \ref{SAXContainer}, pero como en este punto ya no necesitamos información acerca de la jerarquía del informe porque esta información se conserva en la estructura del árbol, ni necesitamos información acerca del estado del análisis sintáctico porque ya lo hemos completado, descartamos estos atributos para así aligerar la estructura de datos en la medida de lo posible.\par
 
 \begin{lstlisting}[label=container,caption=Clase para contenedores DICOM-SR]
-
 class Container(object):
     def __init__(self, tree_level, concept=Concept(), 
     			 properties=Property(), attributes=[]):
@@ -271,30 +249,20 @@ class Container(object):
         self.attributes = attributes[:]
 
     def get_code(self)
-
     def get_schema(self)
-
     def get_meaning(self)
-
     def get_level(self)
-
     def get_concept(self)
-
     def get_schema_code(self,sep='_')
-
     def has_code(self,code)
-
     def __str__(self)
-
     def __repr__(self)
-
 \end{lstlisting}
 
 Finalmente nos queda ver como se integra el árbol en la clase que modela el informe DICOM-SR.\par
-Como vemos en \ref{dicomSRcode}, la interfaz de esta clase es análoga a la definida en \ref{SAXReport}, descartando la información que ya no es necesaria y encapsulando los contenedores del informe dentro de un árbol en lugar de en una lista.\par
+Como vemos en el ejemplo de código \ref{dicomSRcode}, la interfaz de esta clase es análoga a la definida en el ejemplo de código previo \ref{SAXReport}, descartando la información que ya no es necesaria y encapsulando los contenedores del informe dentro de un árbol en lugar de en una lista.\par
 
 \begin{lstlisting}[label=dicomSRcode,caption=Clase para contenedores DICOM-SR]
-
 class DicomSR(object):
     def __init__(self, report_type="", id_ontology=-1):
         self.report_type = report_type
@@ -302,25 +270,18 @@ class DicomSR(object):
         self.report = Tree()
 
     def __repr__(self)
-
     def add_node(self, node, parent):
-
     def get_ontology(self):
-
     def get_flat_data(self):
-
     def get_root(self):
-
     def get_data_form_report(self, languages, template_type):
-
 \end{lstlisting}
 
 La transformación de una estructura de datos en otra se realiza al finalizar en análisis sintáctico. \par
 Cuando el analizador sintácico SAX alcance el final del documento, lanzará un evento \emph{endDocument} y en este punto construiremos el árbol. \par
-En \ref{build_dicom_tree}, vemos como hemos construido este árbol. Primero ordenamos los contenedores de la lista y vamos recorriendo esta lista ordenada insertándolos en su posición correcta en el árbol. \par
+En el ejemplo de código \ref{build_dicom_tree}, vemos como hemos construido este árbol. Primero ordenamos los contenedores de la lista y vamos recorriendo esta lista ordenada insertándolos en su posición correcta en el árbol. \par
 
 \begin{lstlisting}[label=build_dicom_tree,caption=Constructor de un árbol DICOM-SR]
-
     def build_dicom_tree(self):
         """ Build a DicomSR tree using the information read in the file."""
         self._dict_report = DicomSR(self._report.report_type,
@@ -338,7 +299,7 @@ En \ref{build_dicom_tree}, vemos como hemos construido este árbol. Primero orde
 
 Aunque generar el árbol y rellenarlo suponga añadir una etapa más a la generación de código. Este paso intermedio simplifica el proceso de generaración automática de código, especialmente de aquellas partes de código que necesiten información jerárquica del informe médico.\par
 
-\section{Generador de la aplicación Android}
+\section{Generador de la aplicación Android}\label{sec:generacion}
 Tras la etapa anterior tenemos el informe DICOM-SR cargado en memoria en una estructura de árbool. La siguiente etapa será la de generar el código necesario para instanciar la aplicación Android framework para un informe DICOM-SR concreto.\par
 
 \subsection{Configuración}\label{sec:configuracion}
@@ -348,7 +309,7 @@ Además ciertas funciones internas como la ruta en la que se encuentran las plan
 La librería estándar de Python nos ofrece un módulo para gestionar la configuración de manera muy simple, se trata de \emph{ConfigParser}.\par
 Este módulo nos permitirá leer tanto la configuración establecida por el  usuario como la establecida por el sistema.\par
 Los ficheros que utiliza \emph{ConfigParser} estructuran la información mediante secciones, que se indican ente corchetes [ ]. Cada sección almacena los datos de configuración mediante pares clave-valor.\par
-En \ref{settingsINI} vemos un ejemplo de configuración con la sección que contiene la ruta dónde se almacenará el código generado. La sección es \emph{[Output Directories]} y como podemos ver los ficheros de configuración permiten interpolar valores; por ejemplo: el directorio dónde se guardarán las actividades es el siguiente: \emph{Activities: \%(MainDir)s/activities}, cuando preguntemos a \emph{ConfigParser} por este valor nos devolverá la siguiente ruta: \emph{./outputs/activities}.\par
+En el ejemplo de código \ref{settingsINI} vemos un ejemplo de configuración con la sección que contiene la ruta dónde se almacenará el código generado. La sección es \emph{[Output Directories]} y como podemos ver los ficheros de configuración permiten interpolar valores; por ejemplo: el directorio dónde se guardarán las actividades es el siguiente: \emph{Activities: \%(MainDir)s/activities}, cuando preguntemos a \emph{ConfigParser} por este valor nos devolverá la siguiente ruta: \emph{./outputs/activities}.\par
 
 \begin{lstlisting}[label=settingsINI,caption=Sección del fichero de configuración]
 ...
@@ -370,7 +331,7 @@ Manifest: %(MainDir)s/manifest
 La gestión de estos ficheros de configuración ha hacemos dentro del módulo \emph{core}. Puesto que necesitaremos acceder a la configuración desde distintos módulos del programa y por lo tanto tiene sentido que este módulo este accesible.\par
 El fichero \emph{config.py} contiene las funciones que tratarán con los ficheros de configuración, así como la gestión de otros aspectos de la configuración como la interacionalización. Las funciones más relevantes para este propósito son las siguientes:
 \begin{itemize}
-\item \emph{set\_environment}: establece las variables de entorno de Jinja para la gestión de plantillas. Hablaremos más en profundidad de este tema en \ref{sec:jinja}.
+\item \emph{set\_environment}: establece las variables de entorno de Jinja para la gestión de plantillas. Hablaremos más en profundidad de este tema en el apartado \ref{sec:jinja}.
 \item \emph{get\_languages}: devuelve una lista con los idiomas soportados por la plantilla.
 \item \emph{read\_config}: crea una instancia de \emph{ConfigParser} y lee el ficheros con la configuración.
 \item \emph{get\_filepath}: devuelve la ruta dónde debemos generar los ficheros de un tipo concreto.
@@ -396,7 +357,7 @@ Combinaremos dos sistemas de plantillas dependiento de la complejidad de las pro
 \subsubsection{String.Template}
 De nuevo, dentro de la librería estándar encontramos una solución muy sencilla para la creación de plantillas y la sustitución de sus variables con datos concretos.\par
 Empleamos este método para los casos más sencillos, como para instanciar los nombres de los ficheros.\medskip\par
-En \ref{filesTemplate}, vemos una sección de configuración con los nombres de los ficheros para la distribución de la interfaz de usuario de una Mamografía. Cuando se este generando el código de la aplicación Android para un informe concreto, por cada nivel de la jerarquia del árbol se generará unos ficheros que tomarán su nombre de esta platilla completada con el código del nivel DICOM-SR.\par
+En el ejemplo de código \ref{filesTemplate}, vemos una sección de configuración con los nombres de los ficheros para la distribución de la interfaz de usuario de una Mamografía. Cuando se este generando el código de la aplicación Android para un informe concreto, por cada nivel de la jerarquia del árbol se generará unos ficheros que tomarán su nombre de esta platilla completada con el código del nivel DICOM-SR.\par
 
 \begin{lstlisting}[label=filesTemplate,caption=Sección de la configuración con los nombres de los ficheros]
 ...
@@ -411,7 +372,7 @@ level_3: edit_${PARENT}_${CODE}
 
 Dentro de la configuración gestionaremos el completado de estas plantillas haciendo uso de String.Template.\par
 Como resultado obtenemos ficheros necesarios para la aplicación dónde las variable \emph{\{\$CODE\}} y \emph{\{\$PARENT\}} se sustituyen por el esquema y el código DICOM del nodo actual y de su padre respectivamente.\par
-En \ref{tree:layoutTemplate} tenemos un ejemplo de la salida que obtendríamos tras emplear las plantillas para generar los  nombres de los ficheros.\par
+En el ejempo de código \ref{tree:layoutTemplate} tenemos un ejemplo de la salida que obtendríamos tras emplear las plantillas para generar los  nombres de los ficheros.\par
 
 \begin{figure}
 
@@ -462,7 +423,7 @@ En nuestro proyecto el uso de estas clases la realizaremos dentro del módulo de
 El lenguaje para diseñar plantillas define variables que se sustituyen al ser evaluados por valores concretos.\par
 Para hacer más versátiles estas plantillas, Jinja2 incluye herencia, bucles para controlar los bloques, pruebas,  \ldots\par
 La filosofía seguida para diseñar las plantillas prima maximizar la usabilidad de los bloques. Por lo tanto se definen plantillas unitarias para tratar con elementos básicos como: botones, secciones, variables, \ldots ; plantillas genéricas que servirán como base y plantillas hijas que hereden de estas plantillas base diseñadas haciendo uso de la herencia.\par
-En \ref{template} vemos un ejemplo de una plantilla que crea la interfaz de un campo de control.\medskip\par
+En el ejemplo de código \ref{template} vemos una plantilla que crea la interfaz de un campo de control.\medskip\par
 
 \lstset{escapechar=@,style=python}
 
@@ -482,12 +443,12 @@ En \ref{template} vemos un ejemplo de una plantilla que crea la interfaz de un c
 
 La combinación de estos dos sistemas de plantillas nos proporciona un entorno rápido y sencillo para las tareas que menos complejidad y la potencia sufieciente para generar el código de una aplicación Android soportando lenguajes con caracteres Unicode.\par
 
-\subsection{Generador del modelo}\label{sec:generacion}
+\subsection{Generador del modelo}\label{sec:generacion_modelo}
 Ahora que disponemos de un lenguaje para diseñar plantillas y de la información del informe DICOM-SR cargada en memoria dentro de una estructura de árbol, generaremos el código necesario para obtener la aplicación Android.\medskip\par
 
 En primer lugar generaremos el modelo de datos para el informe concreto con el que estamos trabajando.\par
 Deberemos recorrer el árbol y generar las clases pertinentes.\par
-Para el caso general recorreremos cada nodo completando una plantilla Jinja2 como la que podemos ver en \ref{templateClass}.\par
+Para el caso general recorreremos cada nodo completando una plantilla Jinja2 como la que podemos ver en el ejemplo de código \ref{templateClass}.\par
 \lstset{escapechar=@,style=java}
 
 \begin{lstlisting}[label=templateClass,caption=Plantilla para una clase genérica]
@@ -517,7 +478,7 @@ public class {{ class\_name }} {
 \item Un hallazgos asociado (\emph{Radlex\_rid29896\_trencadis\_mamo\_trmm0011}).
 \end{itemize}
 
-Parte del código que hemos obtenido con este ejemplo lo vemos en \ref{generatedClass}. Además de los atributos también generamos métodos para acceder a estos y modificarlos.\par
+Parte del código que hemos obtenido con el ejemplo anterior lo vemos en ejemplo de código \ref{generatedClass}. Además de los atributos también generamos métodos para acceder a estos y modificarlos.\par
 
 \begin{lstlisting}[label=generatedClass,caption=Clase generada automáticamente]
 public class Radlex_rid10357_radlex_rid29896 {
@@ -531,7 +492,7 @@ public class Radlex_rid10357_radlex_rid29896 {
 \end{lstlisting}
 
 Debemos generar dos clases adicionales, en el caso especial de que la interterfaz gráfica asociada al nivel tenga que mostrar una lista desplegable. En este caso, además de los datos del modelo generaremos adicionalmente una clase para gestionar el grupo y una interfaz para los hijos de esta clase.\par
-Siguiendo con el ejemplo anterior, la clase que modela la mama derecha contiene un desplegable para las posibles lesiones, y por lo tanto hemos generado la clase que vemos en \ref{generatedGroup} que gestiona el grupo que se visualizará dentro de la  lista desplegable y en \ref{generatedChildren} tenemos la interfaz de la que extenderán las clases que modelen las desesctructuraciones, las asimetrías, los nodos, las calcificiaciones y el hallazgo asociado.\par
+Siguiendo con el ejemplo anterior, la clase que modela la mama derecha contiene un desplegable para las posibles lesiones, y por lo tanto hemos generado la clase que vemos en el ejemplo de código \ref{generatedGroup} que gestiona el grupo que se visualizará dentro de la  lista desplegable y en el ejemplo de código \ref{generatedChildren} tenemos la interfaz de la que extenderán las clases que modelen las desesctructuraciones, las asimetrías, los nodos, las calcificiaciones y el hallazgo asociado.\par
 
 \begin{lstlisting}[label=generatedGroup,caption=Clase generada automáticamente para tratar con el grupo de una lista desplegable]
 package com.i3m.meer.model;
@@ -556,10 +517,76 @@ public interface Radlex_rid10357_radlex_rid29896_Children {
 Al finalizar esta etapa tendremos el modelo de datos del informe DICOM-SR como clases Java con las que puede tratar nuestra aplicación Android.\par
 
 \subsection{Generador de la vista}
-\subsubsection{Generador de la interfaz de usuario}
+La interfaz de las aplicaciones Android se puede crear de dos manera: mediante ficheros XML que definen la interfaz o mediante código desde la clase que controla la ventana.\par
+Si optamos por la segunda opción no estaremos cumpliendo con el principio de diseño de software MVC, que nos insta a separa la presentación del controlador. Además si definimos la interfaz de usuario en un XML podremos definir tantas distribuciones de la interfaz de usuario como queramos (para adaptar la aplicación a distintas resoluciones, tamaños de pantalla, idiomas, \ldots) y cargar un fichero XML u otro en tiempo de ejecución dependiendo de las características del dispositivo Android o de las preferencias del usuario. Por lo tanto, nosotros optaremos por la primera opción.\medskip \par
+Por una parte la interfaz de usuario la forman los ficheros XML que sitúan cada elemento de la interfaz gráfica y para simplifcar el proceso de internacionalización tenemos otros ficheros con las cadenas de texto que se mostrarán en la interfaz gráfica.\par
+
+\subsubsection{Generador de la interfaz de usuario}\label{vista:ui}
+Cada pantalla de la aplicación Android corresponde directamente con un nivel del informe DICOM-SR. Un nivel se compone de un contendor que identifica el nivel y puede contener atributos, contenedores hijos o ambos elementos.\par
+Para definir la interfaz de usuario debemos contemplar estas posibilidades y diseñar las plantillas necesarias para que se puedan generar los ficheros XML.\par
+En la figura \ref{fig:layoutAC} vemos caso de que el nivel informe médico tuviera atributos y contenedores hijos, en este caso sólo hay una opción distribuir una columna para los atributos y la otra para los hijos. Otra posibilidad, que vemos en la figura \ref{fig:layoutA} es que el nodo que estemos representando sea una hoja del árbol y sólo tenga atributos, en este caso podríamos usar una o dos columnas para mostrar los atributos, dependiendo de lo que haya indicado el usuario en la configuración. Finalmente en la figura \ref{fig:layoutC} vemos como representar un nodo que solo tiene hijos, se trata de una distribución análoga a la vista para nodos sólo con atributos.\medskip\par
+
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=0.6]{./imgs/esquemas/layoutAttributesChildren.pdf}
+\caption{Distribución de la interfaz de usuario con atributos e hijos}
+\label{fig:layoutAC}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=0.45]{./imgs/esquemas/layoutAttributes.pdf}
+\caption{Distribución de la interfaz de usuario con atributos}
+\label{fig:layoutA}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[scale=0.45]{./imgs/esquemas/layoutChildren.pdf}
+\caption{Distribución de la interfaz de usuario con hijos}
+\label{fig:layoutC}
+\end{figure}
+
+Diseñamos estas plantillas empleando el lenguaje de definición de plantillas de Jinja. Creamos una plantilla general (\emph{main.xml}), con los bloques de la interfaz de usuario que no varían (franja superior e inferior, segmento central, \ldots). Del mismo modo crearemos dos plantillas más, que extenderán el comportamiento de la plantilla general para codificar la interfaz de pantalla con una columna (\emph{one\_column.xml}) o con dos columnas (\emph{two\_columns.xml}).\par
+El resto de los elementos de la interfaz de usuario (botones, campos de validación, campos de texto, \ldots) se diseñarán también utilizando Jinja. Todas estas plantillas son elementos modulares que se integrarán en la interfaz de usuario.\medskip\par
+
+El programa generador de código se encarga de recorrer en anchura el árbol con el informe DICOM-SR y para cada nivel generar el fichero XML con la interfaz que le corresponda completando las plantillas Jinja con los datos concretos de este nivel.\par
+Este fichero se almacenará en la ruta indicada por el usuario en la configuración. \par
+
+
 \subsubsection{Generador de las cadenas de texto}\label{vista:strings}
+Los elementos de la interfaz de usuario que acabamos de crear no muestran ningún texto. En el campo destinado a almacenar una cadena de texto hemos escrito el identificador de un recurso. En este apartado crearemos los ficheros con las cadenas de texto que se mostrarán en el informe.\par
+De nuevo tenemos una serie de plantillas Jinja para definir los recursos de texto que tendrá disponibles la aplicación Android.\par
+Rellenar estas plantillas es mucho más sencillo que en el apartado anterior porque no necesitamos información de la estructura del árbol, únicamente necesitamos un conjunto (sin repetidos) de todos los \emph{CONCEPT\_MEANING} que aparecen en el informe DICOM-SR. Extraemos este conjunto del árbol y rellenamos las plantillas. \medskip\par
+La única complicación con la que debemos lidiar es la de identificar correctamente en que idioma está escrito el significado (\emph{CONCEPT\_MEANING}) de una etiqueta del informe DICOM-SR.\par 
+Como en el propio informe no aparece la codificación del idioma,el usuario puede introducir el código en la configuración siguiendo el estándar ISO 3166-1-alpha-2. Este es el estándar que se utiliza en Android y consiste en 2 letras que identifican el idioma, un guión bajo ``\_'' y 2 letras más que identifican el país.\par 
+Si el usuario no establece el idioma, el sistema asume que el texto está escrito en inglés si el informe no está internacionalizado y si está internacionalizado le adjudica el inglés al texto dentro de la etiqueta   \emph{CONCEPT\_MEANING2} y castellano para la etiqueta  \emph{CONCEPT\_MEANING}.
 
 \subsection{Generador del controlador}
-\subsubsection{Generador de las actividades}
 
+El último elemento que nos falta generar para completar la aplicación Android es el controlador. \par
+En Android la visualización de la interfaz de usuario y la actualización del modelo de datos la realizan las actividades (\emph{Activity}). Una actividad es un componente de una aplicación Android que muestra una pantalla con la que el usuario puede interacturar. Cada actividad es responsable de cargar la interfaz de usuario definida mediante ficheros XML, crear los métodos que escuchen los eventos creados por la interacción con el usuario, interactuar con el modelo y por supuesto gestionar el ciclo de vida de la propia actividad.\medskip\par
+
+%\subsubsection{Generador de las actividades}
+% Caso general
+El caso general para generar las actividades es análogo al descrito en los apartados \ref{sec:generacion_modelo} y \ref{vista:ui}. En este caso la información de la jerarquía del informe estructurado vuelve a ser relevante, por lo tanto recorreremos el árbol en anchura generando una clase que extiende el funcionamiento de la clase \emph{Activity}.\par
+Al igual que en los casos anteriores hemos diseñado un conjunto de plantillas Jinja2 para modelar estas clases, y estas plantillas las completamos con la interfaz de usuario y los controladores correspondientes a los elementos del contenedor DICOM-SR.\medskip\par 
+
+% Controladores para expandable listview
+Para que las listas desplegables se comporten de manera adecuada a la funcionalidad que espera el usuario, deberemos crear adaptadores que extiendan el comportamiento básico de estas listas.\par
+De nuevo, tendremos una plantilla Jinja2 para que los contenedores que precisen de listas desplegables las instancien.\medskip\par
+
+% Manifest
+Lo último que nos queda generar es el fichero \emph{AndroidManifest.txt}. Toda aplicación Android debe tener este fichero en el directorio raíz donde se encuentra el código.\par
+Este fichero recoge toda la información fundamental de la aplicación al sistema. En este fichero debe figurar los siguientes elementos:
+\begin{itemize}
+\item El nombre del paquete de Java de la aplicación.
+\item Los componentes de la aplicación Androdid: actividades, indicando cual es la actividad de inicio; servicios; proveedores de contenido; \ldots
+\item Los permisos que necesita la aplicación para ejecutarse. 
+\item La API mínima de Android que necesita la aplicación para ejecutarse. 
+\end{itemize}
+Definimos una plantilla Jinja2 con los elementos del manifiesto Android que instanciamos con los datos de la aplicación Android que hemos generado.\bigskip \par
+
+Todos estos ficheros que hemos ido generando se integran dentro de la aplicación Android esqueleto componiendo una aplicación Android específica para el informe estructurado DICOM-SR de entrada.\par
+Hemos conseguido una aplicación Android funcional a partir de un informe estructurado DICOM-SR.
 %\section{Generador de la plantilla de resultados}
